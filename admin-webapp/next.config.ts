@@ -3,12 +3,12 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   // async rewrites(): Promise<Rewrite[]> {
-  //   // return [
-  //   //   {
-  //   //     source: '/api/:path*',
-  //   //     destination: 'https://localhost:8102/api/:path*',
-  //   //   },
-  //   // ]
+  //   return [
+  //     {
+  //       source: '/api/:path*',
+  //       destination: 'https://localhost:8102/api/:path*',
+  //     },
+  //   ]
   // },
 }
 
