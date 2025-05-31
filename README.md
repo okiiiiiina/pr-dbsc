@@ -96,3 +96,26 @@ sudo nginx -s reload
 ```
 mkcert -CAROOT
 ```
+
+**local で DBSC を実行するための Chrome の設定**
+
+`公式サイト:https://developer.chrome.com/blog/dbsc-origin-trial?hl=ja`
+
+```
+DBSC をローカルでテストするには:
+
+chrome://flags#device-bound-session-credentials に移動して、この機能を有効にします。
+```
+
+`有志:https://zenn.dev/maronn/articles/program-dbsc-app`
+
+```
+結論正解はchrome://flags/#enable-standard-device-bound-session-credentialsをEnabled - Without Origin Trial tokensとし、chrome://flags/#enable-standard-device-bound-sesssion-refresh-quotaをDisabledとする形でした。
+画像としては、以下の通りです。
+```
+
+**参考サイト**
+https://zenn.dev/maronn/articles/program-dbsc-app
+https://developer.chrome.com/docs/web-platform/device-bound-session-credentials?hl=ja
+https://developer.chrome.com/blog/dbsc-origin-trial?hl=ja
+https://zenn.dev/maronn/articles/about-dbsc-infomation
