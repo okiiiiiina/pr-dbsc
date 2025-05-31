@@ -1,0 +1,28 @@
+
+services:
+  admin-bff:
+    build:
+      context: ./admin-bff
+      dockerfile: src/docker/Dockerfile
+    ports:
+      - "8006:80"
+    volumes:
+      - ./admin-bff/src:/var/www/html
+      - ./admin-bff/etc/apache2:/etc/apache2
+    working_dir: /var/www/html
+    container_name: admin-bff
+
+  # system-bff:
+  #   build:
+  #     context: ./system-bff
+  #     dockerfile: docker/Dockerfile
+  #   ports:
+  #     - "8007:80"
+  #   volumes:
+  #     - ./system-bff:/var/www/html
+  #   working_dir: /var/www/html
+  #   container_name: system-bff
+
+networks:
+  lvgs-network:
+    driver: bridge

@@ -1,0 +1,9 @@
+localhost+2.pem
+localhost+2-key.pem
+certs/
+
+admin-bff/.env
+
+admin-webapp/.env.local
+admin-webapp/.next
+admin-webapp/node_modules
