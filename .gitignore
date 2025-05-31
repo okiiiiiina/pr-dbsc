@@ -8,3 +8,4 @@ admin-bff/vendor/
 admin-webapp/.env.local
 admin-webapp/.next
 admin-webapp/node_modules
+admin-webapp/.next
