@@ -1,0 +1,47 @@
+/*
+ * Header
+ */
+.appHeader {
+  @apply sticky top-0 z-50 bg-gray-800 shadow-sm border-b border-gray-700;
+}
+
+.headerInner {
+  @apply max-w-7xl mx-auto px-6 py-4 flex items-center justify-between;
+}
+
+.headerLogo {
+  @apply text-xl font-semibold text-white;
+}
+
+.headerNav {
+  @apply flex space-x-6;
+}
+
+.headerLink {
+  @apply text-white px-3 py-2 rounded-md hover:bg-gray-300 hover:text-gray-900 transition-colors duration-300 ease-in-out;
+}
+
+/*
+ * loginUser
+ */
+.loginUserTable {
+  @apply w-full max-w-2xl border border-gray-300 rounded-lg shadow-md bg-white mt-3;
+  @apply text-left text-sm;
+}
+
+.loginUserTable thead {
+  @apply bg-gray-200 text-gray-700;
+}
+
+.loginUserTable th,
+.loginUserTable td {
+  @apply border px-4 py-2;
+}
+
+.loginUserTable tr:nth-child(even) {
+  @apply bg-gray-50;
+}
+
+.userAvatar {
+  @apply w-10 h-10 rounded-full;
+}

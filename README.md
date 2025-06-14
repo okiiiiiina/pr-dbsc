@@ -63,7 +63,7 @@ app.prepare().then(() => {
 /opt/homebrew/etc/nginx/servers/dbsc.conf
 
 ```
-# https://localhost:8102 で待ち受け → PHP (http://localhost:8101)へ転送
+# http://localhost:8101 で待ち受け → PHP (http://localhost:8101)へ転送
 server {
     listen 8102 ssl;
     server_name localhost;

@@ -4,12 +4,13 @@ export default function LoginPage() {
 
 const handleLogin = async () => {
   try {
-    const res = await fetch('https://localhost:8102/api/auth/google-sso')
+    console.log('API URL:', process.env.NEXT_PUBLIC_API_BASE_URI);
+    const res = await fetch(`https://localhost:8102/api/auth/google-sso`)
     const data = await res.json()
-    console.log("🍎", data, data?.url);
+    console.log("🍎", data.data.url);
 
-    if (data?.url) {
-      window.location.href = data.url
+    if (data?.data.url) {
+      window.location.href = data.data.url
     }
   } catch (err) {
     console.error('Failed to load SSO URL', err)
@@ -38,7 +39,6 @@ const handleLogin = async () => {
       >
         Sign in with Google
       </h1>
-
       <button
         onClick={handleLogin}
         style={{

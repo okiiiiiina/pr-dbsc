@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './common.css';
+@import './member.css';
+
+body {
+  @apply font-mono;
+}
+
+.mainContainer {
+  @apply px-6 py-10 bg-gray-100 min-h-screen;
+}
+
+.pageTitle {
+  @apply text-center;
+}
+
+.healthStatus {
+  @apply text-green-700;
+}
+
+.userStatus {
+  @apply text-blue-700;
+}
+
+.notLoggedIn {
+  @apply text-gray-600;
+}

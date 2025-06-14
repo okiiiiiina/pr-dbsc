@@ -22,6 +22,7 @@ export default function CallbackPage() {
       }
 
       try {
+        console.log("🍎codetoken変換");
         const res = await fetch(`https://localhost:8102/api/auth/callback`,
           {
             method: 'POST',
@@ -36,10 +37,10 @@ export default function CallbackPage() {
           return
         }
 
-        // ★ ここでブラウザが自動的に DBSC 登録フローを開始
-        setTimeout(() => {
-          router.replace('/')
-        }, 3000) // ← Chrome が POST を送る時間を確保
+        const data = await res.json()
+        console.log('✅ Token:', data)
+
+        router.push('/')
       } catch (e) {
         console.error('🚨 ネットワークエラー:', e)
       }

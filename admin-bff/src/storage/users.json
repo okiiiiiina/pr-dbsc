@@ -1,11 +1,20 @@
 {
     "auth0|6805175c4393231feaedb774": {
         "sub": "auth0|6805175c4393231feaedb774",
-        "nickname": "okiiiiiina0623",
+        "email": "okiiiiiina0623@gmail.com",
         "name": "okiiiiiina0623@gmail.com",
         "picture": "https://s.gravatar.com/avatar/524c810779cc8d9dbfafa489aedcf19a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fok.png",
-        "updated_at": "2025-05-31T15:12:48.429Z",
-        "email": "okiiiiiina0623@gmail.com",
-        "email_verified": false
+        "updated_at": "2025-06-14T15:45:22+00:00",
+        "role": "owner",
+        "refresh_token": "v1.MezZM4Ufhly1YZM95RZzJwrAf8pv0u2AC1t4uYIgHbiGSilymiqf7t7bvKLEPyUrtkm27CBI_ZTZF4QcQ7NiD8c"
+    },
+    "auth0|67bade478a6c6c144c19cc4a": {
+        "sub": "auth0|67bade478a6c6c144c19cc4a",
+        "email": "airi.yoshizaki@leverages.jp",
+        "name": "airi.yoshizaki@leverages.jp",
+        "picture": "https://s.gravatar.com/avatar/919e6bc66971f71047d752ff8b35d679?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fai.png",
+        "updated_at": "2025-06-14T13:59:55+00:00",
+        "role": "owner",
+        "refresh_token": "v1.MRoAjWz3lmb0iWEpzKZfZ5dO3TLJhVz1mUXwZPCfuv0Rm6JHN0pfqsSJB3Fndt4qGTG_Alt2OVnz9Z4Cq4krdSA"
     }
 }

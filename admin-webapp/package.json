@@ -2,7 +2,6 @@
   "name": "admin-webapp",
   "version": "0.1.0",
   "private": true,
-
   "scripts": {
     "dev": "next dev -p 3101",
     "dev:https": "NODE_OPTIONS='--no-warnings' node server.js",
@@ -14,17 +13,20 @@
     "next": "15.1.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.8",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.29.0",
+    "eslint-config-next": "^15.1.8",
+    "eslint-config-prettier": "^10.1.5",
+    "postcss": "^8.5.5",
+    "prettier": "^3.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3"
   }
 }

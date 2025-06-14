@@ -1,34 +1,31 @@
 <?php
-require_once __DIR__ . '/../models/AuthModel.php';
-require_once __DIR__ . '/../core/Response.php';
 
-use Firebase\JWT\JWT;
+require_once __DIR__ . '/../core/response.php';
+require_once __DIR__ . '/../core/AuthContext.php';
 
 class AuthController
 {
+  private AuthService $authService;
+
+  public function __construct(AuthService $authService)
+  {
+    $this->authService = $authService;
+  }
+
   /**
-   * Google SSO 開始用リンクを返す
+   * handleGetGoogleSSOLink
    */
   public function handleGetGoogleSSOLink(): void
   {
-    $model = new AuthModel();
-    $link  = $model->getGoogleSSOLink();
-
-    // DBSC で必須のポリシーヘッダー
-    header('Permissions-Policy: secure-credentials=()');
-
+    $link = $this->authService->getGoogleSSOLink();
     Response::success(['url' => $link]);
   }
 
   /**
-   * Google からのリダイレクト後に呼ばれる
-   *  - 認可コードを受け取りトークン交換
-   *  - ユーザ情報を同期
-   *  - Device-Bound なセッションクッキーを発行
+   * handleLoginCallback
    */
   public function handleLoginCallback(): void
   {
-    // --- ① ボディ取得・バリデーション ----------------------------
     $raw  = file_get_contents('php://input') ?: '';
     $data = json_decode($raw, true);
 
@@ -36,49 +33,25 @@ class AuthController
       Response::error('Missing authorization code', 400);
       return;
     }
-    $authCode = $data['code'];
 
-    // --- ② Google からトークン取得 & ユーザ同期 --------------------
-    $model      = new AuthModel();
-    $tokenInfo  = $model->exchangeCodeForToken($authCode);
-    $currentUser = $model->syncUserFromToken($tokenInfo);
+    $result = $this->authService->loginWithCode($data['code']);
+    setcookie('session_token', $result['token'], $result['cookieOptions']);
 
-    // --- ③ JWT 作成 ---------------------------------------------
-    $exp     = time() + 60 * 60;          // 1 時間後
-    $payload = ['sub' => $currentUser['sub'], 'exp' => $exp];
-    $jwt     = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
-
-    // --- ④ Device-Bound セッションクッキー発行 -------------------
-    $cookieOpts = [
-      'expires'  => $exp,
-      'path'     => '/',
-      'domain'   => $_ENV['COOKIE_DOMAIN'] ?? 'localhost',
-      'secure'   => true,
-      'httponly' => true,
-      // ★ 同一サイトなら 'Lax' / クロスサイト運用なら 'None'
-      'samesite' => $_ENV['COOKIE_SAMESITE'] ?? 'None',
-    ];
-    setcookie('session_token', $jwt, $cookieOpts);
-
-    // --- ⑤ レスポンス -------------------------------------------
     header('Permissions-Policy: secure-credentials=()');
-    Response::success(['me' => $currentUser]);
+    Response::success(['me' => $result['user']]);
   }
 
   /**
-   * ブラウザからの公開鍵登録 (自動 POST)
+   * handleValidAccessToken
    */
-  public function handleDbscRegistration(): void
+  public function handleValidAccessToken()
   {
-    $raw  = file_get_contents('php://input') ?: '';
-    $data = json_decode($raw, true);
-
-    if (empty($data['id']) || empty($data['publicKey'])) {
-      Response::error('Invalid registration payload', 400);
+    $result = $this->authService->validAccessToken($_COOKIE['session_token'] ?? null);
+    if (!$result['valid']) {
+      Response::error($result['message'], $result['status']);
       return;
     }
 
-    DbscKeyStore::put($data['id'], $data['publicKey']);
-    Response::success(['status' => 'registered']);
+    AuthContext::setUser($result['user']);
   }
 }

@@ -23,12 +23,13 @@ export default function CallbackPage() {
       }
 
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URI}/api/auth/callback`, {
+        console.log("🍎codetoken変換");
+
+        const res = await fetch(`https://localhost:8102/api/auth/callback`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
           body: JSON.stringify({
-            grant_type: 'authorization_code',
             code,
           }),
         })
