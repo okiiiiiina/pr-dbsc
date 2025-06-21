@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Member } from '../types/member'
+import { Me } from '@/features/member/types/me'
 
 export function useLoginUser() {
-  const [loginUser, setLoginUser] = useState<Member | null>(null)
+  const [loginUser, setLoginUser] = useState<Me | null>(null)
   const [status, setStatus] = useState<string>('loading...')
 
   useEffect(() => {
@@ -14,16 +14,16 @@ export function useLoginUser() {
         if (!res.ok) throw new Error(`HTTP error ${res.status}`)
         const data = await res.json()
 
-        const member: Member = {
+        const me: Me = {
           sub: data.data.sub,
           email: data.data.email,
           name: data.data.name,
-          picture: data.data.picture,
+          logoPath: data.data.logoPath,
           role: data.data.role,
-          updatedAt: data.data.updated_at,
+          updatedAt: data.data.updatedAt,
         }
 
-        setLoginUser(member)
+        setLoginUser(me)
         setStatus('ok')
       } catch {
         setStatus('error')

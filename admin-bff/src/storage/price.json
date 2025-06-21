@@ -1,0 +1,30 @@
+[
+  {
+    "stripePriceId": "price_1ROzX8HU2cWKbU6XFBMTm9LP",
+    "price": 480,
+    "currency": "JPY",
+    "interval": "month",
+    "stripeProductId": "prod_SJcm4vKQSKwSZo"
+  },
+  {
+    "stripePriceId": "price_1ROzX8HU2cWKbU6XpQKMsMiZ",
+    "price": 4800,
+    "currency": "JPY",
+    "interval": "year",
+    "stripeProductId": "prod_SJcm4vKQSKwSZo"
+  },
+  {
+    "stripePriceId": "price_1ROzXtHU2cWKbU6XMbB5Yw2k",
+    "price": 1080,
+    "currency": "JPY",
+    "interval": "month",
+    "stripeProductId": "prod_SJcnmNg6jMSzUl"
+  },
+  {
+    "stripePriceId": "price_1ROzYIHU2cWKbU6XCznjcIjA",
+    "price": 10800,
+    "currency": "JPY",
+    "interval": "year",
+    "stripeProductId": "prod_SJcnmNg6jMSzUl"
+  }
+]

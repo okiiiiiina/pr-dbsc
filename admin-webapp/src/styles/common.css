@@ -24,8 +24,12 @@
 /*
  * loginUser
  */
+.loginUserInfo {
+  @apply flex flex-col items-center justify-center gap-4;
+}
+
 .loginUserTable {
-  @apply w-full max-w-2xl border border-gray-300 rounded-lg shadow-md bg-white mt-3;
+  @apply w-full max-w-2xl border border-gray-300 rounded-lg shadow-md bg-white;
   @apply text-left text-sm;
 }
 
@@ -42,6 +46,6 @@
   @apply bg-gray-50;
 }
 
-.userAvatar {
-  @apply w-10 h-10 rounded-full;
+.topUserIcon {
+  @apply rounded-full;
 }

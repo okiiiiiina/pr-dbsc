@@ -3,52 +3,52 @@
 import { useHealthcheck } from '../features/common/hooks/useHealthcheck'
 import { useLoginUser } from '../features/member/hooks/useLoginUser'
 
+import { Me } from '@/features/member/types/me'
+
 // import Image from 'next/image'
 
 export default function Home() {
   const { loginUser, status: userStatus } = useLoginUser()
   const healthStatus = useHealthcheck()
 
+  const keys: (keyof Me)[] = ['sub', 'email', 'name', 'logoPath', 'role', 'updatedAt']
+
   return (
     <main className="mainContainer">
-      <div className="healthStatus">✅ Healthcheck: {healthStatus}</div>
-      <div className="userStatus">🍎 LoginUser Status: {userStatus}</div>
+      <div className="loginUserInfo">
+        {loginUser && <img src={loginUser.logoPath} alt="avatar" className="topUserIcon" />}
 
-      {loginUser ? (
-        <table className="loginUserTable">
-          <thead>
-            <tr>
-              <th>Key</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(loginUser).map(([key, value]) => (
-              <tr key={key}>
-                <td>{key}</td>
-                <td>
-                  {key === 'picture' ? (
-                    <img src={value as string} alt="avatar" className="userAvatar" />
-                  ) : // <Image
-                  //   src={value as string}
-                  //   alt="avatar"
-                  //   width={40}
-                  //   height={40}
-                  //   className="userAvatar"
-                  // />
-                  typeof value === 'boolean' ? (
-                    (value as boolean).toString()
-                  ) : (
-                    (value as string)
-                  )}
-                </td>
+        <div>
+          <div className="healthStatus">✅ Healthcheck: {healthStatus}</div>
+          <div className="userStatus">🍎 LoginUser Status: {userStatus}</div>
+        </div>
+
+        {loginUser ? (
+          <table className="loginUserTable">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Value</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <div className="notLoggedIn">Not logged in</div>
-      )}
+            </thead>
+            <tbody>
+              {keys.map((key) => {
+                const value: any = loginUser[key]
+                const typedValue = value as string | boolean
+
+                return (
+                  <tr key={key}>
+                    <td>{key}</td>
+                    <td>{typeof typedValue === 'boolean' ? typedValue.toString() : value}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <div className="notLoggedIn">Not logged in</div>
+        )}
+      </div>
     </main>
   )
 }

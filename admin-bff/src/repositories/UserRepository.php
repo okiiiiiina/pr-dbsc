@@ -1,46 +1,37 @@
 <?php
 
+require_once __DIR__ . '/../storage/func.php';
+
 class UserRepository
 {
-  private string $storageFile = __DIR__ . '/../storage/users.json';
+  private string $storageFile;
+  private JsonLoader $jsonLoader;
+
+  public function __construct()
+  {
+    $this->storageFile = __DIR__ . '/../storage/users.json';
+    $this->jsonLoader = new JsonLoader($this->storageFile);
+  }
 
   public function findBySub(string $sub): ?array
   {
-    $users = $this->loadUsers();
+    $users = $this->jsonLoader->load();
     return $users[$sub] ?? null;
   }
 
   /**
    * upsertUser
    */
-  public function upsertUser(array $userInfo, string $refreshToken): void
+  public function upsertUser(array $user): void
   {
-    $sub = $userInfo['sub'];
-    $users = $this->loadUsers();
-
-    $users[$sub] = [
-      'sub' => $sub,
-      'email' => $userInfo['email'] ?? '',
-      'name' => $userInfo['name'] ?? '',
-      'picture' => $userInfo['picture'] ?? '',
-      'updated_at' => date('Y-m-d H:i:s'),
-      'role' => 'owner',
-      'refresh_token' => $refreshToken
-    ];
+    $sub = $user['sub'];
+    $users = $this->jsonLoader->load();
+    $users[$sub] = $user;
 
     file_put_contents(
       $this->storageFile,
       json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
     );
-  }
-
-  /**
-   * loadUsers
-   */
-  private function loadUsers(): array
-  {
-    if (!file_exists($this->storageFile)) return [];
-    return json_decode(file_get_contents($this->storageFile), true) ?? [];
   }
 
   /**

@@ -1,8 +1,10 @@
+import { Workspace } from '@/features/workspace/types/workspace'
+
 export type Member = {
   sub: string
   email: string
   name: string
-  picture: string
+  logoPath: string
   role: string
   updatedAt: string
 }

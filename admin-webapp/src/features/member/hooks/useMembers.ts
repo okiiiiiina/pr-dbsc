@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Member } from '../types/member'
+import { Member } from '@/features/member/types/member'
 
 export function useMembers() {
   const [members, setMembers] = useState<Member[]>([])
@@ -21,7 +21,8 @@ export function useMembers() {
           name: m.name,
           picture: m.picture,
           role: m.role,
-          updatedAt: m.updated_at,
+          updatedAt: m.updatedAt,
+          workspace: undefined,
         }))
 
         setMembers(formattedMembers)

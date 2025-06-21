@@ -6,23 +6,23 @@ class UserModel
   public string $email;
   public string $name;
   public string $nickname;
-  public string $picture;
+  public string $logoPath;
   public string $updatedAt;
   public string $role;
   public bool $emailVerified;
   public string $refreshToken;
 
-  public function __construct(array $data, string $refreshToken = '')
+  public function __construct(array $data)
   {
     $this->sub = $data['sub'] ?? '';
     $this->email = $data['email'] ?? '';
     $this->name = $data['name'] ?? '';
     $this->nickname = $data['nickname'] ?? '';
-    $this->picture = $data['picture'] ?? '';
-    $this->updatedAt = $data['updated_at'] ?? '';
+    $this->logoPath = $data['logoPath'] ?? '';
+    $this->updatedAt = $data['updatedAt'] ?? '';
     $this->role = $data['role'] ?? '';
     $this->emailVerified = $data['email_verified'] ?? false;
-    $this->refreshToken = $refreshToken;
+    $this->refreshToken = $data['refreshToken'] ?? false;
   }
 
   public function toArray(): array
@@ -32,11 +32,11 @@ class UserModel
       'email' => $this->email,
       'name' => $this->name,
       'nickname' => $this->nickname,
-      'picture' => $this->picture,
-      'updated_at' => $this->updatedAt,
+      'logoPath' => $this->logoPath,
+      'updatedAt' => $this->updatedAt,
       'role' => $this->role,
       'email_verified' => $this->emailVerified,
-      'refresh_token' => $this->refreshToken,
+      'refreshToken' => $this->refreshToken,
     ];
   }
 }

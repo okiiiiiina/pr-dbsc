@@ -1,13 +1,13 @@
 'use client'
 
-import { useMembers } from '../../features/member/hooks/useMembers'
+import { useMembers } from '../../../features/member/hooks/useMembers'
 
 export default function MemberPage() {
   const { members } = useMembers()
 
   return (
     <main className="mainContainer">
-      <h1 className="pageTitle">メンバー</h1>
+      <h1 className="pageTitle">MemberPage</h1>
 
       {members.length === 0 ? (
         <div className="text-gray-500 text-sm mt-4">メンバーがいません</div>

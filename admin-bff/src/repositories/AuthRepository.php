@@ -84,8 +84,18 @@ class AuthRepository
     $response = file_get_contents("https://{$this->config->getDomain()}/oauth/userinfo", false, $context);
     if (!$response) throw new Exception("Failed to get userInfo from Auth0");
 
-    $user = json_decode($response, true);
-    if (!isset($user['sub'])) throw new Exception("Invalid userinfo response");
+    $userInfo = json_decode($response, true);
+    if (!isset($userInfo['sub'])) throw new Exception("Invalid userinfo response");
+
+    $user = [
+      'sub'            => $userInfo['sub'] ?? '',
+      'nickname'       => $userInfo['nickname'] ?? '',
+      'name'           => $userInfo['name'] ?? '',
+      'logoPath'       => $userInfo['picture'] ?? '',
+      'updatedAt'      => $userInfo['updated_at'] ?? '',
+      'email'          => $userInfo['email'] ?? '',
+      'emailVerified'  => $userInfo['email_verified'] ?? false,
+    ];
 
     return $user;
   }

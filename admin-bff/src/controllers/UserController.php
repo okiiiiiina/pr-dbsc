@@ -17,9 +17,11 @@ class UserController
    */
   public function handleGetMe(): void
   {
+    error_log("🍆🍆🍆handleGetMe s🍆🍆🍆");
     $user = AuthContext::getUser();
 
     if (!$user) {
+      error_log("🍆con !user");
       Response::error('Unauthorized', 401);
       return;
     }

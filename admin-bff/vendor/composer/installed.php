@@ -3,7 +3,7 @@
         'name' => 'airi/admin-bff',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '2dd5bbbcd021ad6ea69418917db1520466b3930b',
+        'reference' => '5d32e7c254fbb503f3b0680b64f570e1f17db0a1',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'airi/admin-bff' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '2dd5bbbcd021ad6ea69418917db1520466b3930b',
+            'reference' => '5d32e7c254fbb503f3b0680b64f570e1f17db0a1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

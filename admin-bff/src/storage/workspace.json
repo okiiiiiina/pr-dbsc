@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ws_20250601111111",
+    "name": "ワークスペース1",
+    "stripeCustomerId": "cus_SW0SIArf5s3ncE",
+    "createdAt": "2025-06-17T00:00:00+00:00",
+    "updatedAt": "2025-06-17T00:00:00+00:00"
+  },
+  {
+    "id": "ws_20250602222222",
+    "name": "ワークスペース2",
+    "stripeCustomerId": "cus_Rr3Wqe4Mg0EsvJ",
+    "createdAt": "2025-06-17T00:00:00+00:00",
+    "updatedAt": "2025-06-17T00:00:00+00:00"
+  }
+]

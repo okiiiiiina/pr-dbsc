@@ -63,7 +63,7 @@ function healthRoutes(): array
 
 function getRoutesByDomain(string $domain): array
 {
-  error_log("🍏" . $domain);
+  error_log("🍏getRoutesByDomain🍏" . $domain);
   return match ($domain) {
     'auth'   => authRoutes(),
     'users' => userRoutes(),
