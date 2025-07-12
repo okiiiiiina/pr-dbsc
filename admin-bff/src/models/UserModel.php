@@ -1,5 +1,7 @@
 <?php
 
+namespace App\models;
+
 class UserModel
 {
   public string $sub;
@@ -12,6 +14,7 @@ class UserModel
   public bool $emailVerified;
   public string $refreshToken;
 
+  // 本来は一つ一つ値渡すのがいいと思うけど、変数増えるとそれだけ面倒なのでarrayに集約
   public function __construct(array $data)
   {
     $this->sub = $data['sub'] ?? '';

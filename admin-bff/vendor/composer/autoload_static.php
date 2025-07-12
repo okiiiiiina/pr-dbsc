@@ -64,7 +64,7 @@ class ComposerStaticInit195098e0935c4e8ad4d89f370cc40e0f
         'A' => 
         array (
             'Auth0\\SDK\\' => 10,
-            'Airi\\AdminBff\\' => 14,
+            'App\\' => 4,
         ),
     );
 
@@ -164,7 +164,7 @@ class ComposerStaticInit195098e0935c4e8ad4d89f370cc40e0f
         array (
             0 => __DIR__ . '/..' . '/auth0/auth0-php/src',
         ),
-        'Airi\\AdminBff\\' => 
+        'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

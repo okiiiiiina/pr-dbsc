@@ -1,5 +1,9 @@
 <?php
 
+namespace App\repositories;
+
+use JsonLoader;
+
 require_once __DIR__ . '/../storage/func.php';
 
 class UserRepository
@@ -22,16 +26,21 @@ class UserRepository
   /**
    * upsertUser
    */
-  public function upsertUser(array $user): void
+  public function upsertUser(array $user): array
   {
     $sub = $user['sub'];
     $users = $this->jsonLoader->load();
     $users[$sub] = $user;
 
-    file_put_contents(
+    $result = file_put_contents(
       $this->storageFile,
       json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
     );
+
+    if ($result === false) {
+      return ['error' => true];
+    }
+    return [];
   }
 
   /**

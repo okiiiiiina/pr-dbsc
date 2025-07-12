@@ -1,11 +1,19 @@
 <?php
 
+namespace App\services;
+
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../models/UserModel.php';
+
+use Exception;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Firebase\JWT\ExpiredException;
+
+use App\core\error\CustomException;
+use App\models\UserModel;
+use App\repositories\AuthRepository;
+use App\repositories\UserRepository;
 
 class AuthService
 {
@@ -31,30 +39,47 @@ class AuthService
    */
   public function loginWithCode(string $code): array
   {
-    $tokens = $this->auth0Repo->exchangeCodeForTokens($code);
-    $userInfo = $this->auth0Repo->syncUserFromToken($tokens->access_token);
+    try {
+      $tokens = $this->auth0Repo->exchangeCodeForTokens($code);
+      if (isset($tokens->error)) {
+        // throw new CustomException(401, 'Unauthorized', 'Failed to exchange code for tokens');
+      }
 
-    $userInfo['role'] = 'owner';
-    $userInfo['refreshToken'] = $tokens->refresh_token;
-    // $userInfo['updatedAt'] = date('Y-m-d H:i:s');
+      $userInfo = $this->auth0Repo->syncUserFromToken($tokens->access_token);
+      if (isset($userInfo['error'])) {
+        // throw new CustomException(401, 'Unauthorized', 'Failed to retrieve user information from Auth0');
+      }
 
-    $user = new UserModel($userInfo);
-    $this->userRepo->upsertUser($user->toArray());
+      $userInfo['role'] = 'owner';
+      $userInfo['refreshToken'] = $tokens->refresh_token;
 
-    $exp = time() + 3600;
-    $payload = ['sub' => $user->sub, 'exp' => $exp, 'aud' => $_ENV['JWT_AUDIENCE']];
-    $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+      $user = new UserModel($userInfo);
+      $result = $this->userRepo->upsertUser($user->toArray());
+      if (isset($result['error'])) {
+        // throw new CustomException(500, 'Internal Server Error', 'Failed to save user to storage.');
+      }
 
-    $cookieOptions = [
-      'expires' => $exp,
-      'path' => '/',
-      'domain' => $_ENV['COOKIE_DOMAIN'] ?? 'localhost',
-      'secure' => true,
-      'httponly' => true,
-      'samesite' => $_ENV['COOKIE_SAMESITE'] ?? 'None'
-    ];
+      $exp = time() + 3600;
+      $payload = ['sub' => $user->sub, 'exp' => $exp, 'aud' => $_ENV['JWT_AUDIENCE']];
+      $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
 
-    return ['user' => $user, 'token' => $jwt, 'cookieOptions' => $cookieOptions];
+      $cookieOptions = [
+        'expires' => $exp,
+        'path' => '/',
+        'domain' => $_ENV['COOKIE_DOMAIN'] ?? 'localhost',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => $_ENV['COOKIE_SAMESITE'] ?? 'None'
+      ];
+
+      return ['user' => $user, 'token' => $jwt, 'cookieOptions' => $cookieOptions];
+    } catch (\Throwable $e) {
+      throw new CustomException(
+        $e->getCode(),
+        $e->getMessage(),
+        get_class($e),
+      );
+    }
   }
 
   /**

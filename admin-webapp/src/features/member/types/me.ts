@@ -1,7 +1,7 @@
 import { WorkspaceForMe } from '@/features/workspace/types/workspaceForMe'
 
 export type Me = {
-  sub: string
+  userID: string
   name: string
   email: string
   logoPath: string

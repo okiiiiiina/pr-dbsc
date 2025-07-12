@@ -28,5 +28,5 @@ return array(
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Composer\\Semver\\' => array($vendorDir . '/composer/semver/src'),
     'Auth0\\SDK\\' => array($vendorDir . '/auth0/auth0-php/src'),
-    'Airi\\AdminBff\\' => array($baseDir . '/src'),
+    'App\\' => array($baseDir . '/src'),
 );

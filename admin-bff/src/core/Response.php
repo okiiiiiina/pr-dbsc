@@ -1,10 +1,12 @@
 <?php
 
+namespace App\core;
+
 class Response
 {
   public static function json($data, $code = 200, $e = null)
   {
-    if ($e instanceof Throwable) {
+    if ($e instanceof \Throwable) {
       error_log("[" . date('Y-m-d H:i:s') . "] Exception: " . $e->getMessage());
       error_log($e->getTraceAsString());
     }

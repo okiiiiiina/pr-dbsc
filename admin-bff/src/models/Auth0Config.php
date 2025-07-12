@@ -1,5 +1,7 @@
 <?php
 
+namespace App\models;
+
 class Auth0Config
 {
   private string $domain;

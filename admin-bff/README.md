@@ -1,7 +1,30 @@
 ## 起動
 
 ```
+cd admin-bff
 php -S 127.0.0.1:8101 src/index.php
+php -S 127.0.0.1:8101 -t src src/index.php
+```
+
+## test
+
+### GET
+
+```
+※  helthcheck の middlware を off にしてから確認する「'middleware' => []」
+
+curl http://localhost:8101/api/health
+```
+
+### POST
+
+```
+※  該当API の middlware を off にしてから確認する「'middleware' => []」
+
+curl -X POST http://localhost:8101/api/workspaces \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhdXRoMHw2ODA1MTc1YzQzOTMyMzFmZWFlZGI3NzQiLCJleHAiOjE3NTIzMzA1MjAsImF1ZCI6Imx2Z3MtcHJhY3RpY2UtYXBwIn0.35S3KbZWQoiZmxJbPVKMHqrJJIm5o3kIZrZhscy52rU" \
+  -d '{"name": "テスト", "plan": "pro"}'
 ```
 
 ## 認証・認可フロー（Auth0 + 自前 JWT）

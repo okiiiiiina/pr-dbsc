@@ -1,25 +1,32 @@
 <?php
 
-require_once __DIR__ . '/../services/WorkspaceService.php';
+namespace App\controllers;
+
+use App\core\Response;
+use App\dto\request\workspace\CreateRequest;
+use App\services\WorkspaceService;
+
 require_once __DIR__ . '/../core/AuthContext.php';
 
 class WorkspaceController
 {
-  private WorkspaceService $workspaceService;
+  private WorkspaceService $service;
 
-  public function __construct(WorkspaceService $workspaceService)
+  public function __construct(WorkspaceService $service)
   {
-    $this->workspaceService = $workspaceService;
+    $this->service = $service;
   }
 
-  // /**
-  //  * handleCreate
-  //  */
-  // public function handleCreate(): void
-  // {
-  //   $body = file_get_contents('php://input');
-  //   $data = json_decode($body, true)
+  /**
+   * handleCreate
+   */
+  public function handleCreate(): void
+  {
+    $body = file_get_contents('php://input');
+    $data = new CreateRequest(json_decode($body, true));
 
-  //   // Response::success($user);
-  // }
+    $this->service->create($data);
+
+    Response::success([], 204);
+  }
 }

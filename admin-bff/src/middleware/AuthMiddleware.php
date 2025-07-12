@@ -1,31 +1,45 @@
 <?php
-require_once __DIR__ . '/../controllers/AuthController.php';
-require_once __DIR__ . '/../models/UserModel.php';
-require_once __DIR__ . '/../core/AuthContext.php';
+
+use App\core\AuthContext;
+use App\core\Response;
+use App\services\AuthService;
+use App\repositories\AuthRepository;
+use App\repositories\UserRepository;
 
 class AuthMiddleware
 {
   public static function handle()
   {
-    error_log("🍆🍆🍆middleware s🍆🍆🍆");
+    error_log("🍆🍆🍆middleware🍆🍆🍆 ENV:" . $_ENV['ENV']);
+
+    // ローカル環境なら認証スキップしてテストユーザーをセット
+    if ($_ENV['ENV'] === 'local') {
+      AuthContext::setUser([
+        'userID' => 'auth0|67bade478a6c6c144c19cc4a',
+        'email' => 'airi.yoshizaki@leverages.jp',
+        'name' => 'airi.yoshizaki@leverages.jp',
+        'logoPath' => 'https://s.gravatar.com/avatar/919e6bc66971f71047d752ff8b35d679?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fai.png',
+        'updatedAt' => '2025-06-14T13:59:55+00:00',
+        'role' => 'owner',
+        'refreshToken' => 'v1.MRoAjWz3lmb0iWEpzKZfZ5dO3TLJhVz1mUXwZPCfuv0Rm6JHN0pfqsSJB3Fndt4qGTG_Alt2OVnz9Z4Cq4krdSA'
+      ]);
+      return;
+    }
 
     // 各依存の初期化（テスト環境用）
     $userRepo = new UserRepository();
     $authRepo = new AuthRepository();
     $authService = new AuthService($authRepo, $userRepo);
-    $authContext = new AuthContext();
-    // $authController = new AuthController($authService);
 
-    // アクセストークンの検証
+    // アクセストークンの検証（セッショントークンっていう命名にしてしまってるので直す）
     $res = $authService->validAccessToken($_COOKIE['session_token'] ?? null);
     if (!$res['valid']) {
       error_log("🍆" . json_encode($res));
       return Response::error($res['message'], $res['status']);
     }
 
-    $authContext->setUser($res['user']);
+    AuthContext::setUser($res['user']);
 
-    error_log("🍆🍆🍆middleware e🍆🍆🍆" . json_encode($res));
 
     // $authService
     // getMeでワークスペースに所属するmemberを取得する

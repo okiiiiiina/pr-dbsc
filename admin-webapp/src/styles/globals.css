@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './common.css';
-@import './member.css';
+@import './conponents.css';
+@import './pages.css';
 
 body {
-  @apply font-mono;
+  @apply font-mono text-sm;
 }
 
 .mainContainer {
@@ -14,7 +14,11 @@ body {
 }
 
 .pageTitle {
-  @apply text-center;
+  @apply text-center text-xl;
+}
+
+.pageContent {
+  @apply mt-8;
 }
 
 .healthStatus {
@@ -27,4 +31,23 @@ body {
 
 .notLoggedIn {
   @apply text-gray-600;
+}
+
+.submitBtn {
+  @apply /* レイアウト */
+    block mx-auto w-60 text-center
+    /* パディングと色 */
+    px-4 py-2 bg-sky-500 text-white rounded-md
+    /* ホバー */
+    hover:bg-sky-600
+    /* 無効状態 */
+    disabled:bg-gray-300
+    disabled:text-gray-500
+    disabled:cursor-not-allowed
+    /* その他 */
+    cursor-pointer transition;
+}
+
+.label {
+  @apply block mb-1 font-semibold text-sm;
 }

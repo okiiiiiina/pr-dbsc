@@ -2,20 +2,29 @@
 
 // controller
 require_once __DIR__ . '/../../middleware/AuthMiddleware.php';
-require_once __DIR__ . '/../../controllers/HealthCheckController.php';
-require_once __DIR__ . '/../../controllers/AuthController.php';
-require_once __DIR__ . '/../../controllers/UserController.php';
-// servise
-require_once __DIR__ . '/../../services/AuthService.php';
-require_once __DIR__ . '/../../services/UserService.php';
-// repository
-require_once __DIR__ . '/../../repositories/AuthRepository.php';
-require_once __DIR__ . '/../../repositories/UserRepository.php';
 
+use App\controllers\HealthCheckController;
+use App\controllers\AuthController;
+use App\controllers\UserController;
+use App\controllers\WorkspaceController;
+
+// servise
+use App\services\AuthService;
+use App\services\UserService;
+use App\services\WorkspaceService;
+
+// repository
+use App\repositories\AuthRepository;
+use App\repositories\UserRepository;
+use App\repositories\WorkspaceRepository;
+
+/**
+ *
+ */
 function authRoutes(): array
 {
-  $userRepo = new UserRepository();
   $authRepo = new AuthRepository();
+  $userRepo = new UserRepository();
   $authService = new AuthService($authRepo, $userRepo);
   $authController = new AuthController($authService);
 
@@ -31,6 +40,9 @@ function authRoutes(): array
   ];
 }
 
+/**
+ *
+ */
 function userRoutes(): array
 {
   $userRepo = new UserRepository();
@@ -49,6 +61,23 @@ function userRoutes(): array
   ];
 }
 
+/**
+ *
+ */
+function workspaceRoutes(): array
+{
+  $wsRepo = new WorkspaceRepository();
+  $wsService = new WorkspaceService($wsRepo);
+  $wsController = new WorkspaceController($wsService);
+
+  return [
+    'POST/api/workspaces' => [
+      'handler' => fn() => $wsController->handleCreate(),
+      'middleware' => ['AuthMiddleware'],
+    ],
+  ];
+}
+
 function healthRoutes(): array
 {
   $healthController = new HealthCheckController();
@@ -57,6 +86,7 @@ function healthRoutes(): array
     'GET/api/health' => [
       'handler' => fn() => $healthController->healthcheck(),
       'middleware' => ['AuthMiddleware'],
+      'middleware' => [],
     ],
   ];
 }
@@ -67,6 +97,7 @@ function getRoutesByDomain(string $domain): array
   return match ($domain) {
     'auth'   => authRoutes(),
     'users' => userRoutes(),
+    'workspaces' => workspaceRoutes(),
     'health' => healthRoutes(),
     default  => [],
   };

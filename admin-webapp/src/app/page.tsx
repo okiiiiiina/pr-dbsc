@@ -3,15 +3,18 @@
 import { useHealthcheck } from '../features/common/hooks/useHealthcheck'
 import { useLoginUser } from '../features/member/hooks/useLoginUser'
 
-import { Me } from '@/features/member/types/me'
+import { Me } from '../features/member/types/me'
+import Link from 'next/link'
 
 // import Image from 'next/image'
 
 export default function Home() {
-  const { loginUser, status: userStatus } = useLoginUser()
+  console.log('🪏レンダリング🪏')
+
+  const { loginUser } = useLoginUser()
   const healthStatus = useHealthcheck()
 
-  const keys: (keyof Me)[] = ['sub', 'email', 'name', 'logoPath', 'role', 'updatedAt']
+  const keys: (keyof Me)[] = ['userID', 'email', 'name', 'logoPath', 'role', 'updatedAt']
 
   return (
     <main className="mainContainer">
@@ -20,7 +23,7 @@ export default function Home() {
 
         <div>
           <div className="healthStatus">✅ Healthcheck: {healthStatus}</div>
-          <div className="userStatus">🍎 LoginUser Status: {userStatus}</div>
+          <div className="userStatus">🍎 LoginUser Status: {loginUser ? 'ok' : 'error'}</div>
         </div>
 
         {loginUser ? (
@@ -46,7 +49,12 @@ export default function Home() {
             </tbody>
           </table>
         ) : (
-          <div className="notLoggedIn">Not logged in</div>
+          <>
+            <div className="notLoggedIn">Not logged in</div>
+            <Link href="/login" className="loginBtn">
+              ログイン
+            </Link>
+          </>
         )}
       </div>
     </main>

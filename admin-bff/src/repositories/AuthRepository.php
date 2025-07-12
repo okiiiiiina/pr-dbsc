@@ -1,10 +1,14 @@
 <?php
 
-require_once __DIR__ . '/../models/Auth0Config.php';
+namespace App\repositories;
 
+use App\models\Auth0Config;
 use Auth0\SDK\Auth0;
 use Auth0\SDK\Exception\InvalidTokenException;
 use Auth0\SDK\Token;
+use Exception;
+
+require_once __DIR__ . '/../models/Auth0Config.php';
 
 class AuthRepository
 {

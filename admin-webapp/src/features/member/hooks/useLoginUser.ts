@@ -1,37 +1,33 @@
+import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import { Me } from '@/features/member/types/me'
 
 export function useLoginUser() {
+  const fetcher = (url: string) => fetch(url, { credentials: 'include' }).then((r) => r.json())
+
+  const { data, error, isLoading } = useSWR(`https://localhost:8102/api/users/me`, fetcher)
   const [loginUser, setLoginUser] = useState<Me | null>(null)
-  const [status, setStatus] = useState<string>('loading...')
 
   useEffect(() => {
-    async function fetchMe() {
-      try {
-        const res = await fetch(`https://localhost:8102/api/users/me`, {
-          credentials: 'include',
-        })
-        if (!res.ok) throw new Error(`HTTP error ${res.status}`)
-        const data = await res.json()
+    if (isLoading) return
 
-        const me: Me = {
-          sub: data.data.sub,
-          email: data.data.email,
-          name: data.data.name,
-          logoPath: data.data.logoPath,
-          role: data.data.role,
-          updatedAt: data.data.updatedAt,
-        }
-
-        setLoginUser(me)
-        setStatus('ok')
-      } catch {
-        setStatus('error')
-      }
+    if (error) {
+      // toast.error('メンバーの取得に失敗しました')
+      return
     }
 
-    fetchMe()
-  }, [])
+    if (data) {
+      const me: Me = {
+        userID: data.data.userID,
+        email: data.data.email,
+        name: data.data.name,
+        logoPath: data.data.logoPath,
+        role: data.data.role,
+        updatedAt: data.data.updatedAt,
+      }
+      setLoginUser(me)
+    }
+  }, [data, error, isLoading])
 
-  return { loginUser, status }
+  return { loginUser, isLoading }
 }

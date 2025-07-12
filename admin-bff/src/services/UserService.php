@@ -1,5 +1,10 @@
 <?php
 
+namespace App\services;
+
+use App\repositories\UserRepository;
+use App\models\UserModel;
+
 class UserService
 {
   private UserRepository $repo;

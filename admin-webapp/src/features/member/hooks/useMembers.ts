@@ -1,22 +1,27 @@
+import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import { Member } from '@/features/member/types/member'
 
 export function useMembers() {
+  const fetcher = (url: string) => fetch(url, { credentials: 'include' }).then((r) => r.json())
+
+  const { data, error, isLoading } = useSWR(`https://localhost:8102/api/users`, fetcher)
   const [members, setMembers] = useState<Member[]>([])
 
   useEffect(() => {
-    async function fetchMembers() {
-      try {
-        const res = await fetch(`https://localhost:8102/api/users`, {
-          credentials: 'include',
-        })
-        if (!res.ok) throw new Error(`HTTP error ${res.status}`)
-        const data = await res.json()
+    if (isLoading) return
 
-        console.log('☠️error:', data)
+    if (error) {
+      // toast.error('メンバーの取得に失敗しました')
+      return
+    }
 
-        const formattedMembers: Member[] = data.data.map((m: any) => ({
-          sub: m.sub,
+    console.log(data)
+
+    if (data) {
+      setMembers(
+        data.data.map((m: any) => ({
+          userID: m.userID,
           email: m.email,
           name: m.name,
           picture: m.picture,
@@ -24,16 +29,9 @@ export function useMembers() {
           updatedAt: m.updatedAt,
           workspace: undefined,
         }))
-
-        setMembers(formattedMembers)
-      } catch (e) {
-        // エラートースト出す
-        console.log('☠️error:', e)
-      }
+      )
     }
+  }, [data, error, isLoading])
 
-    fetchMembers()
-  }, [])
-
-  return { members }
+  return { members, isLoading }
 }

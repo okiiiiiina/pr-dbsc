@@ -7,10 +7,10 @@ export default function CallbackPage() {
   const router = useRouter()
 
   useEffect(() => {
-    (async () => {
-      const url      = new URL(window.location.href)
-      const code     = url.searchParams.get('code')
-      const authErr  = url.searchParams.get('error')
+    ;(async () => {
+      const url = new URL(window.location.href)
+      const code = url.searchParams.get('code')
+      const authErr = url.searchParams.get('error')
 
       if (authErr) {
         console.error('Auth error:', authErr)
@@ -22,18 +22,16 @@ export default function CallbackPage() {
       }
 
       try {
-        console.log("🍎codetoken変換");
-        const res = await fetch(`https://localhost:8102/api/auth/callback`,
-          {
-            method: 'POST',
-            credentials: 'include',
-            headers:   { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code }),
-          },
-        )
+        console.log('🍎codetoken変換', code)
+        const res = await fetch(`https://localhost:8102/api/auth/callback`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code }),
+        })
 
         if (!res.ok) {
-          console.error('❌ トークン取得失敗:', await res.text())
+          console.error('☠️トークン取得失敗:', await res.text())
           return
         }
 
@@ -42,7 +40,7 @@ export default function CallbackPage() {
 
         router.push('/')
       } catch (e) {
-        console.error('🚨 ネットワークエラー:', e)
+        console.error('☠️ unKown:', e)
       }
     })()
   }, [router])

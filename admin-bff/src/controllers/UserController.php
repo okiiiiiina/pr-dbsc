@@ -1,5 +1,12 @@
 <?php
 
+namespace App\controllers;
+
+use App\core\AuthContext;
+use App\core\Response;
+
+use App\services\UserService;
+
 require_once __DIR__ . '/../services/UserService.php';
 require_once __DIR__ . '/../core/AuthContext.php';
 

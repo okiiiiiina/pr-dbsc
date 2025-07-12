@@ -1,7 +1,14 @@
 <?php
 
+namespace App\controllers;
+
+use App\core\Response;
+use App\core\AuthContext;
+use App\services\AuthService;
+
 require_once __DIR__ . '/../core/response.php';
 require_once __DIR__ . '/../core/AuthContext.php';
+
 
 class AuthController
 {
@@ -29,7 +36,7 @@ class AuthController
     $raw  = file_get_contents('php://input') ?: '';
     $data = json_decode($raw, true);
 
-    if (!isset($data['code']) || $data['code'] === '') {
+    if (!isset($data['code']) || $data['code'] === '' || isset($data['error'])) {
       Response::error('Missing authorization code', 400);
       return;
     }
