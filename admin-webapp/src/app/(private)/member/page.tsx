@@ -1,6 +1,6 @@
 'use client'
 
-import { useMembers } from '../../../features/member/hooks/useMembers'
+import { useMembers } from '@/features/member/hooks/useMembers'
 
 export default function MemberPage() {
   console.log('🪏レンダリング🪏')
@@ -20,6 +20,7 @@ export default function MemberPage() {
             <table className="memberTable">
               <thead>
                 <tr>
+                  <th>ID</th>
                   <th>メールアドレス</th>
                   <th>名前</th>
                   <th>権限</th>
@@ -29,6 +30,7 @@ export default function MemberPage() {
               <tbody>
                 {members.map((member) => (
                   <tr key={member.userID}>
+                    <td>{member.userID}</td>
                     <td>{member.email}</td>
                     <td>{member.name}</td>
                     <td>{member.role}</td>

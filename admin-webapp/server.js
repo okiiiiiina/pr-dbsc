@@ -6,7 +6,7 @@ const https = require('https')
 
 const port = 3101
 const dev = true
-const app = next({ dev, dir: './src' })
+const app = next({ dev, dir: './' })
 const handle = app.getRequestHandler()
 
 const httpsOptions = {

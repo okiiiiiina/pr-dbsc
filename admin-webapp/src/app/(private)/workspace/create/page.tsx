@@ -1,36 +1,22 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useCreateWorkspace } from '@/features/workspace/hooks/useCreateWorkspace'
 
 export default function WorkspaceCreatePage() {
   console.log('🪏レンダリング🪏')
 
-  const router = useRouter()
+  const { createWorkspace, isMutating } = useCreateWorkspace()
 
   const [name, setName] = useState('')
   const [selectedPlan, setSelectedPlan] = useState<'pro' | 'business' | ''>('pro')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    try {
-      const res = await fetch('https://localhost:8102/api/workspaces', {
-        method: 'POST',
-        body: JSON.stringify({
-          name: name,
-          plan: selectedPlan,
-        }),
-        credentials: 'include',
-      })
-      alert('success')
-      router.push('/workspace/create?refresh=1')
-
-      // alert(`名前: ${name}\nプラン: ${selectedPlan === 'pro' ? 'プロプラン' : selectedPlan === 'business' ? 'ビジネスプラン' : '未選択'}`)
-    } catch (e) {
-      console.log(e)
-      alert('error')
-    }
+    createWorkspace({ name, plan: selectedPlan })
   }
+
+  console.log('isMutating:', isMutating)
 
   return (
     <main className="mainContainer">

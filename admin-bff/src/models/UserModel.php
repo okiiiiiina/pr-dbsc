@@ -4,7 +4,7 @@ namespace App\models;
 
 class UserModel
 {
-  public string $sub;
+  public string $userID;
   public string $email;
   public string $name;
   public string $nickname;
@@ -17,7 +17,7 @@ class UserModel
   // 本来は一つ一つ値渡すのがいいと思うけど、変数増えるとそれだけ面倒なのでarrayに集約
   public function __construct(array $data)
   {
-    $this->sub = $data['sub'] ?? '';
+    $this->userID = $data['sub'] ?? '';
     $this->email = $data['email'] ?? '';
     $this->name = $data['name'] ?? '';
     $this->nickname = $data['nickname'] ?? '';
@@ -31,7 +31,7 @@ class UserModel
   public function toArray(): array
   {
     return [
-      'sub' => $this->sub,
+      'userID' => $this->userID,
       'email' => $this->email,
       'name' => $this->name,
       'nickname' => $this->nickname,

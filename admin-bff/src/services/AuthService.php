@@ -50,6 +50,7 @@ class AuthService
         // throw new CustomException(401, 'Unauthorized', 'Failed to retrieve user information from Auth0');
       }
 
+      // 固定で owner
       $userInfo['role'] = 'owner';
       $userInfo['refreshToken'] = $tokens->refresh_token;
 
@@ -60,7 +61,7 @@ class AuthService
       }
 
       $exp = time() + 3600;
-      $payload = ['sub' => $user->sub, 'exp' => $exp, 'aud' => $_ENV['JWT_AUDIENCE']];
+      $payload = ['sub' => $user->userID, 'exp' => $exp, 'aud' => $_ENV['JWT_AUDIENCE']];
       $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
 
       $cookieOptions = [

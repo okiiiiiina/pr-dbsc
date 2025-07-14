@@ -18,7 +18,7 @@ export function useMembers() {
 
     console.log(data)
 
-    if (data) {
+    if (data.data.length > 0) {
       setMembers(
         data.data.map((m: any) => ({
           userID: m.userID,
