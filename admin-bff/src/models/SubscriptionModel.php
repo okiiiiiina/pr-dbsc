@@ -29,6 +29,11 @@ class SubscriptionModel
     ];
   }
 
+  public function getID(): string
+  {
+    return $this->id;
+  }
+
   public function setStripeSubscriptionId(string $val)
   {
     $this->stripeSubscriptionId = $val;
@@ -40,12 +45,4 @@ class SubscriptionModel
     $milliseconds = (int) ($dt->format('u') / 1000);
     return 'ws_' . $dt->format('Ymd_His') . sprintf('%03d', $milliseconds);
   }
-
-  // private function setID()
-  // {
-  //   if ($this->id) return;
-  //   $dt = new DateTime();
-  //   $milliseconds = (int) ($dt->format('u') / 1000);
-  //   $this->id = 'sub_' . $dt->format('Ymd_His') . sprintf('%03d', $milliseconds);
-  // }
 }

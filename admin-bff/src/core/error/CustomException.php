@@ -7,14 +7,17 @@ class CustomException extends \Exception
   protected string $class;
   // protected string $httpStatusMessage; // $statusText
 
-  public function __construct(?int $code, ?string $message, ?string $class = 'unknown')
-  {
+  public function __construct(
+    ?int $code,
+    ?string $message,
+    ?string $class = 'unknown',
+    ?string $stackTrace = 'unknown'
+  ) {
     parent::__construct($message, $code);
     $this->class = $class;
 
-
     // ☠️ ログ出力
-    error_log("☠️ [CustomException] CODE: $code | MESSAGE: $message | CLASS: $class");
+    error_log("☠️ [CustomException]\nCODE: $code\nMESSAGE: $message\nCLASS: $class\nSTACK_TRACE: $stackTrace");
   }
 
   public function toArray(): array

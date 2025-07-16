@@ -10,10 +10,12 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Firebase\JWT\ExpiredException;
 
+
 use App\core\error\CustomException;
 use App\models\UserModel;
 use App\repositories\AuthRepository;
 use App\repositories\UserRepository;
+
 
 class AuthService
 {
@@ -42,12 +44,12 @@ class AuthService
     try {
       $tokens = $this->auth0Repo->exchangeCodeForTokens($code);
       if (isset($tokens->error)) {
-        // throw new CustomException(401, 'Unauthorized', 'Failed to exchange code for tokens');
+        throw new CustomException(401, 'Unauthorized', 'Failed to exchange code for tokens');
       }
 
       $userInfo = $this->auth0Repo->syncUserFromToken($tokens->access_token);
       if (isset($userInfo['error'])) {
-        // throw new CustomException(401, 'Unauthorized', 'Failed to retrieve user information from Auth0');
+        throw new CustomException(401, 'Unauthorized', 'Failed to retrieve user information from Auth0');
       }
 
       // 固定で owner
@@ -57,11 +59,11 @@ class AuthService
       $user = new UserModel($userInfo);
       $result = $this->userRepo->upsertUser($user->toArray());
       if (isset($result['error'])) {
-        // throw new CustomException(500, 'Internal Server Error', 'Failed to save user to storage.');
+        throw new CustomException(500, 'Internal Server Error', 'Failed to save user to storage.');
       }
 
       $exp = time() + 3600;
-      $payload = ['sub' => $user->userID, 'exp' => $exp, 'aud' => $_ENV['JWT_AUDIENCE']];
+      $payload = ['sub' => $user->id, 'exp' => $exp, 'aud' => $_ENV['JWT_AUDIENCE']];
       $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
 
       $cookieOptions = [
@@ -86,29 +88,28 @@ class AuthService
   /**
    * validAccessToken
    */
-  public function validAccessToken(?string $token): array
+  public function validAccessToken(?string $token): string
   {
     if (!$token) {
-      return ['valid' => false, 'status' => 401, 'message' => 'No session token'];
+      throw new CustomException(401, 'Unauthorized', 'No session token');
     }
 
     try {
       $payload = JWT::decode($token, new Key($_ENV['JWT_SECRET'], 'HS256'));
     } catch (ExpiredException $e) {
-      return ['valid' => false, 'status' => 401, 'message' => 'Expired token'];
+      throw new CustomException(401, 'Unauthorized', 'Expired token');
     } catch (Exception $e) {
-      return ['valid' => false, 'status' => 401, 'message' => 'Invalid token'];
+      throw new CustomException(401, 'Unauthorized', 'Invalid token');
     }
 
     if (!isset($payload->aud) || $payload->aud !== $_ENV['JWT_AUDIENCE']) {
-      return ['valid' => false, 'status' => 403, 'message' => 'Invalid audience'];
+      throw new CustomException(403, 'Forbidden', 'Invalid audience');
     }
 
-    $user = $this->userRepo->findBySub($payload->sub ?? '');
-    if (!$user) {
-      return ['valid' => false, 'status' => 403, 'message' => 'User not found'];
+    if (empty($payload->sub)) {
+      throw new CustomException(403, 'Forbidden', 'Missing subject (sub)');
     }
 
-    return ['valid' => true, 'user' => $user];
+    return $payload->sub;
   }
 }

@@ -18,14 +18,4 @@ class AuthContext
   {
     return self::$me;
   }
-
-  public static function setUser(array $user): void
-  {
-    self::$user = $user;
-  }
-
-  public static function getUser(): ?array
-  {
-    return self::$user;
-  }
 }

@@ -2,40 +2,35 @@
 
 namespace App\repositories;
 
+use App\core\error\CustomException;
 use App\models\WorkspaceModel;
-use App\models\MemberModel;
-use App\models\SubscriptionModel;
-use App\models\PaymentInfoModel;
+
+use App\storage\JsonLoader;;
 
 class WorkspaceRepository
 {
-  private string $storageFile = __DIR__ . '/../storage/users.json';
+  private string $storageFile;
+  private JsonLoader $jsonLoader;
 
-  /**
-   * create
-   */
+  public function __construct()
+  {
+    $this->storageFile = __DIR__ . '/../storage/workspace.json';
+    $this->jsonLoader = new JsonLoader($this->storageFile);
+  }
+
   public function create(
     WorkspaceModel $ws,
-    SubscriptionModel $sub,
-    MemberModel $mem,
-    PaymentInfoModel $pay
   ): void {
-    // stripeを全部保存する
+    $workspaces = $this->jsonLoader->load();
+    $workspaces[$ws->getID()] = $ws->toArray();
 
+    $result = file_put_contents(
+      $this->storageFile,
+      json_encode($workspaces, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+    );
 
-    // jsonに書き込む
-    // ワークスペース作成
-    $ws = [];
-    if (file_exists($this->storageFile)) {
-      $json = file_get_contents($this->storageFile);
-      $ws = json_decode($json, true) ?? [];
+    if ($result === false) {
+      throw new CustomException(500, 'Internal Server Error', 'Failed to write workspace data to storage file');
     }
-
-    // $ws[] = $data;
-
-    // file_put_contents(
-    //   $this->storageFile,
-    //   json_encode($ws, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
-    // );
   }
 }

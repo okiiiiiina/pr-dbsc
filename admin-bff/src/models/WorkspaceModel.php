@@ -17,7 +17,7 @@ class WorkspaceModel
   {
     $this->id = $data['id'] ?? $this->generateNewID();
     $this->name = $data['name'] ?? '';
-    $this->stripeCustomerId = $data['stripe_customer_id'] ?? '';
+    $this->stripeCustomerId = $data['stripeCustomerId'] ?? '';
   }
 
   public function toArray(): array

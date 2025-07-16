@@ -15,8 +15,14 @@ use App\services\WorkspaceService;
 
 // repository
 use App\repositories\AuthRepository;
+use App\repositories\MemberRepository;
+use App\repositories\PaymentInfoRepository;
+use App\repositories\SubscriptionRepository;
 use App\repositories\UserRepository;
 use App\repositories\WorkspaceRepository;
+
+// lib
+use App\libs\Stripe;
 
 /**
  *
@@ -25,7 +31,8 @@ function authRoutes(): array
 {
   $authRepo = new AuthRepository();
   $userRepo = new UserRepository();
-  $authService = new AuthService($authRepo, $userRepo);
+  $memRepo = new MemberRepository();
+  $authService = new AuthService($authRepo, $userRepo, $memRepo);
   $authController = new AuthController($authService);
 
   return [
@@ -66,8 +73,12 @@ function userRoutes(): array
  */
 function workspaceRoutes(): array
 {
+  $stripe = new Stripe();
   $wsRepo = new WorkspaceRepository();
-  $wsService = new WorkspaceService($wsRepo);
+  $memRepo = new MemberRepository();
+  $paymentInfo = new PaymentInfoRepository();
+  $subRepo = new SubscriptionRepository();
+  $wsService = new WorkspaceService($wsRepo, $memRepo, $paymentInfo, $subRepo, $stripe);
   $wsController = new WorkspaceController($wsService);
 
   return [

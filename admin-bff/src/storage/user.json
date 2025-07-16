@@ -1,6 +1,6 @@
 {
     "auth0|6805175c4393231feaedb774": {
-        "sub": "auth0|6805175c4393231feaedb774",
+        "id": "auth0|6805175c4393231feaedb774",
         "email": "okiiiiiina0623@gmail.com",
         "name": "okiiiiiina0623@gmail.com",
         "nickname": "okiiiiiina0623",
@@ -11,7 +11,7 @@
         "refreshToken": "v1.MeJlBfoZOr38H47nqgw-D7yNHCiPC2mQddVhZJq-zKkyP_6oBnnL-9PNM1MMdUWIJuLg612jxVh6bJEpy7WDWtw"
     },
     "auth0|67bade478a6c6c144c19cc4a": {
-        "sub": "auth0|67bade478a6c6c144c19cc4a",
+        "id": "auth0|67bade478a6c6c144c19cc4a",
         "email": "airi.yoshizaki@leverages.jp",
         "name": "airi.yoshizaki@leverages.jp",
         "logoPath": "https://s.gravatar.com/avatar/919e6bc66971f71047d752ff8b35d679?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fai.png",

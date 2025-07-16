@@ -23,8 +23,7 @@ curl http://localhost:8101/api/health
 
 curl -X POST http://localhost:8101/api/workspaces \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhdXRoMHw2ODA1MTc1YzQzOTMyMzFmZWFlZGI3NzQiLCJleHAiOjE3NTIzMzA1MjAsImF1ZCI6Imx2Z3MtcHJhY3RpY2UtYXBwIn0.35S3KbZWQoiZmxJbPVKMHqrJJIm5o3kIZrZhscy52rU" \
-  -d '{"name": "テスト", "plan": "pro"}'
+  -d '{"name": "ワークスペース名", "plan": "pro"}'
 ```
 
 ## 認証・認可フロー（Auth0 + 自前 JWT）

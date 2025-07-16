@@ -2,8 +2,8 @@
 
 namespace App\controllers;
 
+use App\core\error\CustomException;
 use App\core\Response;
-use App\core\AuthContext;
 use App\services\AuthService;
 
 require_once __DIR__ . '/../core/response.php';
@@ -53,12 +53,15 @@ class AuthController
    */
   public function handleValidAccessToken()
   {
-    $result = $this->authService->validAccessToken($_COOKIE['session_token'] ?? null);
-    if (!$result['valid']) {
-      Response::error($result['message'], $result['status']);
-      return;
+    // $sub = $this->authService->validAccessToken($_COOKIE['session_token'] ?? null);
+    // if (!$sub) {
+    //   Response::error($result['message'], $result['status']);
+    //   return;
+    // }
+    try {
+      $this->authService->validAccessToken($_COOKIE['session_token'] ?? null);
+    } catch (CustomException $e) {
+      return Response::json($e->toArray(), $e->getCode());
     }
-
-    AuthContext::setUser($result['user']);
   }
 }

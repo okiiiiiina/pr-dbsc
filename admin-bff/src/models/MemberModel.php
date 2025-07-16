@@ -7,6 +7,7 @@ use DateTime;
 class MemberModel
 {
   private string $id;
+  private string $workspaceID;
   private string $userID;
   private string $name;
   private string $email;
@@ -15,6 +16,7 @@ class MemberModel
   public function __construct(array $data)
   {
     $this->id = $data['id'] ?? $this->generateNewID();
+    $this->workspaceID = $data['workspaceID'] ?? '';
     $this->userID = $data['userID'] ?? '';
     $this->name = $data['name'] ?? '';
     $this->email = $data['email'] ?? '';
@@ -24,12 +26,32 @@ class MemberModel
   {
     return [
       'id' => $this->id,
+      'workspaceID' => $this->workspaceID,
       'userID' => $this->userID,
-      'name' => $this->name,
       'email' => $this->email,
+      'name' => $this->name,
     ];
   }
 
+  public function getID()
+  {
+    return $this->id;
+  }
+
+  public function getWorkspaceID()
+  {
+    return $this->workspaceID;
+  }
+
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  public function getEmail()
+  {
+    return $this->email;
+  }
 
   private function generateNewID(): string
   {
@@ -37,12 +59,4 @@ class MemberModel
     $milliseconds = (int) ($dt->format('u') / 1000);
     return 'mem_' . $dt->format('Ymd_His') . sprintf('%03d', $milliseconds);
   }
-
-  // private function setID()
-  // {
-  //   if ($this->id) return;
-  //   $dt = new DateTime();
-  //   $milliseconds = (int) ($dt->format('u') / 1000);
-  //   $this->id = 'mem_' . $dt->format('Ymd_His') . sprintf('%03d', $milliseconds);
-  // }
 }

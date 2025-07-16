@@ -1,5 +1,7 @@
 <?php
 
+namespace App\storage;
+
 class JsonLoader
 {
   private string $filePath;

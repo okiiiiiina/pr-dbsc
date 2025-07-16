@@ -2,9 +2,10 @@
 
 namespace App\repositories;
 
-use JsonLoader;
 
-require_once __DIR__ . '/../storage/func.php';
+use App\storage\JsonLoader;
+
+// require_once __DIR__ . '/../storage/func.php';
 
 class UserRepository
 {
@@ -13,14 +14,14 @@ class UserRepository
 
   public function __construct()
   {
-    $this->storageFile = __DIR__ . '/../storage/users.json';
+    $this->storageFile = __DIR__ . '/../storage/user.json';
     $this->jsonLoader = new JsonLoader($this->storageFile);
   }
 
-  public function findBySub(string $sub): ?array
+  public function findByID(string $id): ?array
   {
     $users = $this->jsonLoader->load();
-    return $users[$sub] ?? null;
+    return $users[$id] ?? null;
   }
 
   /**
@@ -28,9 +29,9 @@ class UserRepository
    */
   public function upsertUser(array $user): array
   {
-    $sub = $user['sub'];
+    $id = $user['id'];
     $users = $this->jsonLoader->load();
-    $users[$sub] = $user;
+    $users[$id] = $user;
 
     $result = file_put_contents(
       $this->storageFile,

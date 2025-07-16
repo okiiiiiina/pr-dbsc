@@ -29,6 +29,21 @@ class PaymentInfoModel
     ];
   }
 
+  public function toStorageArray(): array
+  {
+    return [
+      'id' => $this->id,
+      'workspaceID' => $this->workspaceID,
+      'billingEmail' => $this->billingEmail,
+      'billingName' => $this->billingName,
+    ];
+  }
+
+  public function getID()
+  {
+    return $this->id;
+  }
+
   private function generateNewID(): string
   {
     $dt = new DateTime();
