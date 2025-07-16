@@ -26,7 +26,7 @@ class WorkspaceRepository
 
     $result = file_put_contents(
       $this->storageFile,
-      json_encode($workspaces, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+      json_encode($workspaces, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
     );
 
     if ($result === false) {

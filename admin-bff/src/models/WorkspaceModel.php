@@ -41,6 +41,11 @@ class WorkspaceModel
     return $this->name;
   }
 
+  public function setStripeCustomerId(string $id): void
+  {
+    $this->stripeCustomerId = $id;
+  }
+
   private function generateNewID(): string
   {
     $dt = new DateTime();

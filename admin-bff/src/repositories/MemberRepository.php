@@ -54,6 +54,8 @@ class MemberRepository
     $members[$mem->getID()] = [
       'id' => $mem->getID(),
       'name' => $mem->getName(),
+      'workspaceID' => $mem->getWorkspaceID(),
+      'userID' => $mem->getUserID(),
     ];
 
     $result = file_put_contents(

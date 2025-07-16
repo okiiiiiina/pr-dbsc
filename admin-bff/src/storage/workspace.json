@@ -1,26 +1,22 @@
 {
     "ws_20250601111111": {
         "id": "ws_20250601111111",
-        "name": "\u30ef\u30fc\u30af\u30b9\u30da\u30fc\u30b91",
-        "stripeCustomerId": "cus_SW0SIArf5s3ncE",
-        "createdAt": "2025-06-17T00:00:00+00:00",
-        "updatedAt": "2025-06-17T00:00:00+00:00"
+        "name": "ワークスペース1",
+        "stripeCustomerId": "cus_SW0SIArf5s3ncE"
     },
     "ws_20250602222222": {
         "id": "ws_20250602222222",
-        "name": "\u30ef\u30fc\u30af\u30b9\u30da\u30fc\u30b92",
-        "stripeCustomerId": "cus_Rr3Wqe4Mg0EsvJ",
-        "createdAt": "2025-06-17T00:00:00+00:00",
-        "updatedAt": "2025-06-17T00:00:00+00:00"
+        "name": "ワークスペース2",
+        "stripeCustomerId": "cus_Rr3Wqe4Mg0EsvJ"
     },
-    "ws_20250716_120934213": {
-        "id": "ws_20250716_120934213",
-        "name": "\u30c6\u30b9\u30c87",
+    "ws_20250716_124806198": {
+        "id": "ws_20250716_124806198",
+        "name": "ワークスペース名",
         "stripeCustomerId": ""
     },
-    "ws_20250716_124121782": {
-        "id": "ws_20250716_124121782",
-        "name": "\u30ef\u30fc\u30af\u30b9\u30da\u30fc\u30b9\u540d",
-        "stripeCustomerId": ""
+    "ws_20250716_125302684": {
+        "id": "ws_20250716_125302684",
+        "name": "ワークスペース3",
+        "stripeCustomerId": "cus_SgsaAKsyzgfey0"
     }
 }

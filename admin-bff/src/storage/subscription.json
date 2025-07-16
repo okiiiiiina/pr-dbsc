@@ -4,5 +4,17 @@
         "stripeSubscriptionId": "sub_1RlUeEHU2cWKbU6XtKg0WwwL",
         "trialStartAt": "2025-07-16 12:41:22",
         "trialEndAt": "2025-07-26 12:41:22"
+    },
+    "ws_20250716_124806573": {
+        "id": "ws_20250716_124806573",
+        "stripeSubscriptionId": "sub_1RlUkkHU2cWKbU6X1criCgf3",
+        "trialStartAt": "2025-07-16 12:48:06",
+        "trialEndAt": "2025-07-26 12:48:06"
+    },
+    "ws_20250716_125303128": {
+        "id": "ws_20250716_125303128",
+        "stripeSubscriptionId": "sub_1RlUpXHU2cWKbU6Xt8aSJRPw",
+        "trialStartAt": "2025-07-16 12:53:03",
+        "trialEndAt": "2025-07-26 12:53:03"
     }
 }

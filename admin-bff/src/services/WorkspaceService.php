@@ -74,13 +74,14 @@ class WorkspaceService
       $sub->setStripeSubscriptionId($subscription->getStripeSubscriptionID());
 
       // db
-      // ws, subscription
+      // ws
+      $ws->setStripeCustomerId($customer->getStripeCustomerID());
       $this->repo->create($ws);
       $this->subRepo->create($sub);
 
       // member
       $mem = new MemberModel([
-        'wsID' => $ws->getID(),
+        'workspaceID' => $ws->getID(),
         'userID' => $me->getUserID(),
         'name' => explode('@', $me->getEmail())[0],
         'email' => $me->getEmail(),
