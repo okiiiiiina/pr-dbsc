@@ -25,7 +25,7 @@ export function useCreateWorkspace() {
       router.push('/')
     },
     onError: () => {
-      alert('error')
+      alert('ワークスペースの切り替えに失敗しました')
     },
   })
 

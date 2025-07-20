@@ -29,7 +29,7 @@ export default function MemberPage() {
               </thead>
               <tbody>
                 {members.map((member) => (
-                  <tr key={member.userID}>
+                  <tr key={member.id}>
                     <td>{member.userID}</td>
                     <td>{member.email}</td>
                     <td>{member.name}</td>

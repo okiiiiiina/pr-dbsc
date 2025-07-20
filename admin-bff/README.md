@@ -22,6 +22,8 @@ error_log(json_encode($workspaceIDs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
 curl http://localhost:8101/api/health
 
 curl https://localhost:8102/api/workspaces/my-list
+
+curl https://localhost:8102/api/members
 ```
 
 ### POST

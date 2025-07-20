@@ -1,6 +1,5 @@
-import { Workspace } from '@/features/workspace/types/workspace'
-
 export type Member = {
+  id: string
   userID: string
   email: string
   name: string

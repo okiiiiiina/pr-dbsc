@@ -17,7 +17,7 @@ class CustomException extends \Exception
     $this->class = $class;
 
     // ☠️ ログ出力
-    error_log("☠️ [CustomException]\nCODE: $code\nMESSAGE: $message\nCLASS: $class\nSTACK_TRACE: $stackTrace");
+    error_log("\n☠️ 【CustomException】\n【CODE】 $code\n【MESSAGE】 $message\n【CLASS】 $class\n【STACK_TRACE】 $stackTrace\n\n");
   }
 
   public function toArray(): array

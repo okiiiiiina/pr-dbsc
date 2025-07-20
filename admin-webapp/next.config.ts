@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       'cdn.auth0.com', // ← fallback URL のドメインも一緒に追加
     ],
   },
+  reactStrictMode: false,
 }
 
 export default nextConfig

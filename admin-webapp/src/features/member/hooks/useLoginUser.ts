@@ -5,7 +5,7 @@ import { Me } from '@/features/member/types/me'
 export function useLoginUser() {
   const fetcher = (url: string) => fetch(url, { credentials: 'include' }).then((r) => r.json())
 
-  const { data, error, isLoading } = useSWR(`https://localhost:8102/api/users/me`, fetcher)
+  const { data, error, isLoading } = useSWR(`https://localhost:8102/api/members/me`, fetcher)
   const [loginUser, setLoginUser] = useState<Me | null>(null)
 
   useEffect(() => {

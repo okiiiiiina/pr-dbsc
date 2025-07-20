@@ -12,13 +12,7 @@ export default function WorkspaceSelectPage() {
   const router = useRouter()
 
   const handleClick = async (id: string) => {
-    try {
-      await switchWorkspace({ id })
-      router.push('/')
-    } catch (e) {
-      console.error('切り替え失敗', e)
-      alert('ワークスペースの切り替えに失敗しました')
-    }
+    await switchWorkspace({ id })
   }
 
   if (isLoading) return <main className="mainContainer">loading...</main>

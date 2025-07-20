@@ -20,22 +20,6 @@ class UserController
   }
 
   /**
-   * ログインユーザーの情報を返す
-   */
-  public function handleGetMe(): void
-  {
-    error_log("🍆🍆🍆handleGetMe s🍆🍆🍆");
-    $me = AuthContext::getMe();
-
-    if (!$me) {
-      Response::error('Unauthorized', 401);
-      return;
-    }
-
-    Response::success($me->toArray());
-  }
-
-  /**
    * ユーザー一覧を返す
    */
   public function handleGetUsers(): void

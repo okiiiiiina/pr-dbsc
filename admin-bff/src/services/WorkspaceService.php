@@ -15,8 +15,6 @@ use App\repositories\PaymentInfoRepository;
 use App\repositories\SubscriptionRepository;
 use App\repositories\WorkspaceRepository;
 
-use App\core\Response;
-
 use DateTime;
 use DateInterval;
 use Exception;
@@ -70,11 +68,13 @@ class WorkspaceService
    */
   public function switch($id): string
   {
+    error_log("🐳" . $id);
+
     try {
       $ws = $this->repo->findByID($id);
 
-      if ($ws['id']) {
-        throw new CustomException(500, 'Internal Server Error', 'Failed to store workspace data in the storage file.');
+      if (!$ws['id']) {
+        throw new CustomException(500, 'Internal Server Error', 'Failed to Find Workspace [at service].');
       }
       return $ws['id'];
     } catch (Exception $e) {

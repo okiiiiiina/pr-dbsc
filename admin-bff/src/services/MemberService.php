@@ -2,9 +2,12 @@
 
 namespace App\services;
 
+use App\core\error\CustomException;
 use App\repositories\MemberRepository;
 use App\models\MeModel;
 use App\models\MemberModel;
+
+use Exception;
 
 class MemberService
 {
@@ -30,9 +33,30 @@ class MemberService
       'role' => $res['role'],
       'logoPath' => $res['logoPath'],
     ]);
-
-    error_log("🍎 サービス:" . json_encode($me->toArray(), true));
-
     return $me;
+  }
+
+  /**
+   * @return MemberModel[]
+   */
+  public function getAll(string $wsID): array
+  {
+    try {
+      $list = $this->repo->getAll($wsID);
+      $members = [];
+
+      foreach ($list as $item) {
+        $members[] = (new MemberModel($item))->toArray();
+      }
+
+      return $members;
+    } catch (Exception $e) {
+      throw new CustomException(
+        $e->getCode(),
+        $e->getMessage(),
+        get_class($e),
+        $e->getTraceAsString()
+      );
+    }
   }
 }

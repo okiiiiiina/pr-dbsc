@@ -5,7 +5,7 @@ import { Member } from '@/features/member/types/member'
 export function useMembers() {
   const fetcher = (url: string) => fetch(url, { credentials: 'include' }).then((r) => r.json())
 
-  const { data, error, isLoading } = useSWR(`https://localhost:8102/api/users`, fetcher)
+  const { data, error, isLoading } = useSWR(`https://localhost:8102/api/members`, fetcher)
   const [members, setMembers] = useState<Member[]>([])
 
   useEffect(() => {
@@ -21,6 +21,7 @@ export function useMembers() {
     if (data.data.length > 0) {
       setMembers(
         data.data.map((m: any) => ({
+          id: m.id,
           userID: m.userID,
           email: m.email,
           name: m.name,

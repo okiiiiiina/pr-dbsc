@@ -2,6 +2,7 @@
 
 namespace App\controllers;
 
+use App\core\error\CustomException;
 use App\core\Response;
 use App\dto\request\workspace\CreateRequest;
 use App\dto\request\workspace\SelectRequest;
@@ -40,7 +41,7 @@ class WorkspaceController
 
     $wsID = $this->service->create($data);
 
-    setcookie('workspace_id', $wsID);
+    setcookie('Workspace_id', $wsID);
     Response::success([], 204);
   }
 
@@ -49,12 +50,21 @@ class WorkspaceController
    */
   public function handleSwitch(): void
   {
-    $body = file_get_contents('php://input');
-    $data = new SelectRequest(json_decode($body, true));
+    try {
+      $body = file_get_contents('php://input');
+      $data = new SelectRequest(json_decode($body, true));
 
-    $id = $this->service->switch($data['id']);
-    setcookie('workspace_id', $id);
+      $id = $this->service->switch($data->id);
 
-    Response::success([], 204);
+      setcookie('Workspace_id', $id);
+      Response::success([], 204);
+    } catch (CustomException $e) {
+      // すでに CustomException ならログ出てる想定
+      Response::error($e->getMessage(), $e->getCode());
+    } catch (\Throwable $e) {
+      // 予期せぬエラーも握って落とさないように
+      error_log("💥 未処理エラー: " . $e->getMessage());
+      Response::error("Internal Server Error", 500);
+    }
   }
 }

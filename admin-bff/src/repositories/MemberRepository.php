@@ -52,6 +52,23 @@ class MemberRepository
     return $me;
   }
 
+  /**
+   * getAll
+   */
+  public function getAll(string $wsID)
+  {
+    $members = $this->memberJsonLoader->load();
+
+    $list = array_filter($members, function ($m) use ($wsID) {
+      return $m['workspaceID'] === $wsID;
+    });
+
+    return $list;
+  }
+
+  /**
+   * create
+   */
   public function create(
     MemberModel $mem,
   ): void {

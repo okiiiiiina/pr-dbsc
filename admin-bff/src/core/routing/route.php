@@ -5,11 +5,13 @@ require_once __DIR__ . '/../../middleware/AuthMiddleware.php';
 
 use App\controllers\HealthCheckController;
 use App\controllers\AuthController;
+use App\controllers\MemberController;
 use App\controllers\UserController;
 use App\controllers\WorkspaceController;
 
 // servise
 use App\services\AuthService;
+use App\services\MemberService;
 use App\services\UserService;
 use App\services\WorkspaceService;
 
@@ -47,6 +49,28 @@ function authRoutes(): array
   ];
 }
 
+
+/**
+ *
+ */
+function memberRoutes(): array
+{
+  $memberRepo = new MemberRepository();
+  $memberService = new MemberService($memberRepo);
+  $memberController = new MemberController($memberService);
+
+  return [
+    'GET/api/members/me' => [
+      'handler' => fn() => $memberController->handleGetMe(),
+      'middleware' => ['AuthMiddleware'],
+    ],
+    'GET/api/members' => [
+      'handler' => fn() => $memberController->handleGetList(),
+      'middleware' => ['AuthMiddleware'],
+    ],
+  ];
+}
+
 /**
  *
  */
@@ -57,10 +81,6 @@ function userRoutes(): array
   $userController = new UserController($userService);
 
   return [
-    'GET/api/users/me' => [
-      'handler' => fn() => $userController->handleGetMe(),
-      'middleware' => ['AuthMiddleware'],
-    ],
     'GET/api/users' => [
       'handler' => fn() => $userController->handleGetUsers(),
       'middleware' => ['AuthMiddleware'],
@@ -115,6 +135,7 @@ function getRoutesByDomain(string $domain): array
   error_log("🍏getRoutesByDomain🍏" . $domain);
   return match ($domain) {
     'auth'   => authRoutes(),
+    'members' => memberRoutes(),
     'users' => userRoutes(),
     'workspaces' => workspaceRoutes(),
     'health' => healthRoutes(),
