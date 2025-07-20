@@ -28,15 +28,15 @@ class MemberController
   public function handleGetMe(): void
   {
     error_log("🍆🍆🍆handleGetMe s🍆🍆🍆");
-    $user = AuthContext::getMe();
+    $me = AuthContext::getMe();
 
-    if (!$user) {
-      error_log("🍆con !user");
+    if (!$me) {
+      error_log("🍆con !me");
       Response::error('Unauthorized', 401);
       return;
     }
 
-    Response::success($user);
+    Response::success($me->toArray());
   }
 
   /**

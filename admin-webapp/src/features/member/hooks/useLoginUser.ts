@@ -12,8 +12,12 @@ export function useLoginUser() {
     if (isLoading) return
 
     if (error) {
-      // toast.error('メンバーの取得に失敗しました')
       alert('取得失敗')
+      return
+    }
+
+    if (!error && (!data.data || Object.keys(data.data).length === 0)) {
+      alert('データ空っぽ')
       return
     }
 
