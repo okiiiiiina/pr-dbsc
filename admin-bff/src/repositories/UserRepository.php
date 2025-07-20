@@ -3,7 +3,7 @@
 namespace App\repositories;
 
 
-use App\storage\JsonLoader;
+use App\core\JsonLoader;
 
 // require_once __DIR__ . '/../storage/func.php';
 

@@ -9,6 +9,7 @@ class MeModel
   private string $name;
   private string $email;
   private string $role;
+  private string $logoPath;
 
 
   public function __construct(array $data)
@@ -18,6 +19,7 @@ class MeModel
     $this->name = $data['name'] ?? '';
     $this->email = $data['email'] ?? '';
     $this->role = $data['role'] ?? '';
+    $this->logoPath = $data['logoPath'] ?? '';
   }
 
   public function toArray(): array
@@ -28,6 +30,7 @@ class MeModel
       'name' => $this->name,
       'email' => $this->email,
       'role' => $this->role,
+      'logoPath' => $this->logoPath,
     ];
   }
 

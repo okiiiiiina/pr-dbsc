@@ -82,6 +82,14 @@ function workspaceRoutes(): array
   $wsController = new WorkspaceController($wsService);
 
   return [
+    'GET/api/workspaces/my-list' => [
+      'handler' => fn() => $wsController->handleGetMyList(),
+      'middleware' => ['AuthMiddleware'],
+    ],
+    'POST/api/workspaces/switch' => [
+      'handler' => fn() => $wsController->handleSwitch(),
+      'middleware' => ['AuthMiddleware'],
+    ],
     'POST/api/workspaces' => [
       'handler' => fn() => $wsController->handleCreate(),
       'middleware' => ['AuthMiddleware'],

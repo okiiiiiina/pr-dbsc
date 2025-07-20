@@ -43,7 +43,54 @@ class WorkspaceService
     $this->stripe = $stripe;
   }
 
-  public function create(CreateRequest $data): void
+  /**
+   * getMyList
+   * @return WorkspaceModel[]
+   */
+  public function getMyList(): array
+  {
+    $me = AuthContext::getMe();
+
+    try {
+      $myListRaw = $this->repo->getMyList($me->getUserID());
+      $res = array_map(fn($item) => new WorkspaceModel($item), $myListRaw);
+      return $res;
+    } catch (Exception $e) {
+      throw new CustomException(
+        $e->getCode(),
+        $e->getMessage(),
+        get_class($e),
+        $e->getTraceAsString()
+      );
+    }
+  }
+
+  /**
+   * switch
+   */
+  public function switch($id): string
+  {
+    try {
+      $ws = $this->repo->findByID($id);
+
+      if ($ws['id']) {
+        throw new CustomException(500, 'Internal Server Error', 'Failed to store workspace data in the storage file.');
+      }
+      return $ws['id'];
+    } catch (Exception $e) {
+      throw new CustomException(
+        $e->getCode(),
+        $e->getMessage(),
+        get_class($e),
+        $e->getTraceAsString()
+      );
+    }
+  }
+
+  /**
+   * create
+   */
+  public function create(CreateRequest $data): string
   {
     $me = AuthContext::getMe();
 
@@ -95,6 +142,8 @@ class WorkspaceService
         'billingEmail' => $mem->getEmail(),
       ]);
       $this->payInfoRepo->create($payInfo);
+
+      return $ws->getID();
     } catch (Exception $e) {
       throw new CustomException(
         $e->getCode(),

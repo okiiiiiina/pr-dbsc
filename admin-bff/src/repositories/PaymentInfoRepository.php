@@ -5,7 +5,7 @@ namespace App\repositories;
 use App\core\error\CustomException;
 use App\models\PaymentInfoModel;
 
-use App\storage\JsonLoader;;
+use App\core\JsonLoader;;
 
 class PaymentInfoRepository
 {

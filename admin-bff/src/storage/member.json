@@ -1,14 +1,30 @@
 {
-    "mem_20250716_124807702": {
-        "id": "mem_20250716_124807702",
+    "mem_20250716_132109095": {
+        "id": "mem_20250716_132109095",
         "name": "airi.yoshizaki",
-        "workspaceID": "ws_20250716_124806198",
+        "workspaceID": "ws_20250716_132107649",
+        "role": "owner",
         "userID": "auth0|67bade478a6c6c144c19cc4a"
     },
-    "mem_20250716_125304245": {
-        "id": "mem_20250716_125304245",
+    "mem_20250716_132533687": {
+        "id": "mem_20250716_132533687",
+        "name": "okiiiiiina0623",
+        "workspaceID": "ws_20250716_132532244",
+        "role": "owner",
+        "userID": "auth0|6805175c4393231feaedb774"
+    },
+    "mem_20250716_155649211": {
+        "id": "mem_20250716_155649211",
         "name": "airi.yoshizaki",
-        "workspaceID": "ws_20250716_125302684",
+        "workspaceID": "ws_20250716_155647514",
+        "role": "owner",
+        "userID": "auth0|67bade478a6c6c144c19cc4a"
+    },
+    "mem_20250717_161616252": {
+        "id": "mem_20250717_161616252",
+        "name": "airi.yoshizaki",
+        "workspaceID": "ws_20250717_161614677",
+        "role": "owner",
         "userID": "auth0|67bade478a6c6c144c19cc4a"
     }
 }

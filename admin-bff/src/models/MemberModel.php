@@ -13,6 +13,7 @@ class MemberModel
   private string $userID;
 
 
+
   public function __construct(array $data)
   {
     $this->id = $data['id'] ?? $this->generateNewID();

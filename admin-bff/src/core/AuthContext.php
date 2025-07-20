@@ -7,7 +7,6 @@ use App\models\MeModel;
 class AuthContext
 {
   private static ?MeModel $me = null;
-  private static ?array $user = null;
 
   public static function setMe(MeModel $me): void
   {

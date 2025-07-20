@@ -8,12 +8,20 @@ php -S 127.0.0.1:8101 -t src src/index.php
 
 ## test
 
+### Log
+
+```
+error_log(json_encode($workspaceIDs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+```
+
 ### GET
 
 ```
 ※  helthcheck の middlware を off にしてから確認する「'middleware' => []」
 
 curl http://localhost:8101/api/health
+
+curl https://localhost:8102/api/workspaces/my-list
 ```
 
 ### POST

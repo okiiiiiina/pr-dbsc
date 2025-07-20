@@ -25,15 +25,14 @@ class UserController
   public function handleGetMe(): void
   {
     error_log("🍆🍆🍆handleGetMe s🍆🍆🍆");
-    $user = AuthContext::getUser();
+    $me = AuthContext::getMe();
 
-    if (!$user) {
-      error_log("🍆con !user");
+    if (!$me) {
       Response::error('Unauthorized', 401);
       return;
     }
 
-    Response::success($user);
+    Response::success($me->toArray());
   }
 
   /**

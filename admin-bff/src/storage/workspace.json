@@ -1,22 +1,22 @@
 {
-    "ws_20250601111111": {
-        "id": "ws_20250601111111",
-        "name": "ワークスペース1",
-        "stripeCustomerId": "cus_SW0SIArf5s3ncE"
-    },
-    "ws_20250602222222": {
-        "id": "ws_20250602222222",
-        "name": "ワークスペース2",
-        "stripeCustomerId": "cus_Rr3Wqe4Mg0EsvJ"
-    },
-    "ws_20250716_124806198": {
-        "id": "ws_20250716_124806198",
-        "name": "ワークスペース名",
-        "stripeCustomerId": ""
-    },
-    "ws_20250716_125302684": {
-        "id": "ws_20250716_125302684",
+    "ws_20250716_132107649": {
+        "id": "ws_20250716_132107649",
         "name": "ワークスペース3",
-        "stripeCustomerId": "cus_SgsaAKsyzgfey0"
+        "stripeCustomerId": "cus_Sgt29ypIknWmNg"
+    },
+    "ws_20250716_132532244": {
+        "id": "ws_20250716_132532244",
+        "name": "輪置くスペース4",
+        "stripeCustomerId": "cus_Sgt7lHnbuFrnFs"
+    },
+    "ws_20250716_155647514": {
+        "id": "ws_20250716_155647514",
+        "name": "ワークスペース10",
+        "stripeCustomerId": "cus_SgvYHzKmq8StBd"
+    },
+    "ws_20250717_161614677": {
+        "id": "ws_20250717_161614677",
+        "name": "テスト",
+        "stripeCustomerId": "cus_ShJ5WXDVY25b0C"
     }
 }

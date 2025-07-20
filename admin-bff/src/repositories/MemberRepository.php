@@ -6,7 +6,7 @@ use App\core\error\CustomException;
 use App\models\MeModel;
 use App\models\MemberModel;
 
-use App\storage\JsonLoader;;
+use App\core\JsonLoader;
 
 class MemberRepository
 {
@@ -22,7 +22,10 @@ class MemberRepository
     $this->userJsonLoader = new JsonLoader($this->userStoragePath);
   }
 
-  public function findMeByUserID(string $id): ?MeModel
+  /**
+   * findMeByUserID
+   */
+  public function findMeByUserID(string $id): array
   {
     $users = $this->userJsonLoader->load();
     $user = $users[$id];
@@ -36,13 +39,15 @@ class MemberRepository
       }
     }
 
-    $me = new MeModel([
+    // dbだと普通にレコード返すだけだからモデルにせずに返す。でも保存の時はモデルでもらう。もしくはモデルにしたものを、配列の状態にしてもらうか。
+    $me = [
       'userID' => $user['id'],
       'memberID' => $member['id'],
       'name' => $member['name'],
       'email' => $user['email'],
       'role' => $member['role'],
-    ]);
+      'logoPath' => $user['logoPath'],
+    ];
 
     return $me;
   }

@@ -2,8 +2,8 @@
 
 use App\core\AuthContext;
 use App\core\error\CustomException;
-use App\core\Response;
 use App\services\AuthService;
+use App\services\MemberService;
 use App\repositories\AuthRepository;
 use App\repositories\UserRepository;
 use App\repositories\MemberRepository;
@@ -16,7 +16,7 @@ class AuthMiddleware
     error_log("🍆🍆🍆middleware🍆🍆🍆 ENV:" . $_ENV['ENV']);
 
     // ローカル環境なら認証スキップしてテストユーザーをセット
-    if ($_ENV['ENV'] === 'local') {
+    if ($_ENV['ENV'] === 'test') {
       $me = new MeModel([
         'userID' => 'auth0|67bade478a6c6c144c19cc4a',
         'email' => 'airi.yoshizaki@leverages.jp',
@@ -31,18 +31,22 @@ class AuthMiddleware
 
     // 各依存の初期化（テスト環境用）
     $userRepo = new UserRepository();
-    $memRepo = new MemberRepository();
     $authRepo = new AuthRepository();
+    $memRepo = new MemberRepository();
+
+    $memService = new MemberService($memRepo);
     $authService = new AuthService($authRepo, $userRepo);
 
     // アクセストークンの検証（セッショントークンっていう命名にしてしまってるので直す）
     try {
       $sub = $authService->validAccessToken($_COOKIE['session_token'] ?? null);
 
-      $me = $memRepo->findMeByUserID($sub);
+      $me = $memService->getMe($sub);
       if (!$me) {
         throw new CustomException(403, 'Forbidden', 'User not found');
       }
+
+      error_log("🍎 ログインユーザ:" . json_encode($me->toArray(), true));
 
       AuthContext::setMe($me);
     } catch (CustomException $e) {
