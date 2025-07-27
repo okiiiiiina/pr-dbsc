@@ -4,7 +4,7 @@ namespace App\core;
 
 class Response
 {
-  public static function json($data, $code = 200, $e = null)
+  public static function json($data, int $code = 200, $e = null)
   {
     if ($e instanceof \Throwable) {
       error_log("[" . date('Y-m-d H:i:s') . "] Exception: " . $e->getMessage());
@@ -24,7 +24,7 @@ class Response
     exit;
   }
 
-  public static function error($message, $code = 400)
+  public static function error(string $message, int $code = 400)
   {
     self::json(['message' => $message], $code);
   }

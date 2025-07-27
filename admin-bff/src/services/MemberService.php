@@ -5,6 +5,7 @@ namespace App\services;
 use App\core\error\CustomException;
 use App\repositories\MemberRepository;
 use App\models\MeModel;
+use App\models\WorkspaceModel;
 use App\models\MemberModel;
 
 use Exception;
@@ -25,6 +26,8 @@ class MemberService
   {
     $res = $this->repo->findMeByUserID($id);
 
+    error_log("🍎service" . json_encode($res, true));
+
     $me = new MeModel([
       'userID' => $res['userID'],
       'memberID' => $res['memberID'],
@@ -32,7 +35,8 @@ class MemberService
       'email' => $res['email'],
       'role' => $res['role'],
       'logoPath' => $res['logoPath'],
-    ]);
+    ], $res['workspace']);
+
     return $me;
   }
 

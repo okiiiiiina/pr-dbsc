@@ -24,11 +24,15 @@ class WorkspaceController
    */
   public function handleGetMyList(): void
   {
-    $workspaces = $this->service->getMyList();
-
-    $res = array_map(fn($w) => $w->toArray(), $workspaces);
-
-    Response::success($res, 200);
+    try {
+      $workspaces = $this->service->getMyList();
+      $res = array_map(fn($w) => $w->toArray(), $workspaces);
+      Response::success($res, 200);
+    } catch (CustomException $e) {
+      Response::error($e->getMessage(), $e->getCode() ?: 500);
+    } catch (\Throwable $e) {
+      Response::error('Internal Server Error', 500);
+    }
   }
 
   /**

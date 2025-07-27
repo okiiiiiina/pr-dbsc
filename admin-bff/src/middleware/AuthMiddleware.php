@@ -13,7 +13,7 @@ class AuthMiddleware
 {
   public static function handle()
   {
-    error_log("🍆🍆🍆middleware🍆🍆🍆 ENV:" . $_ENV['ENV']);
+    error_log("🐉middleware🐉 [ENV]" . $_ENV['ENV'] . "[cookie]" . $_COOKIE['session_token'] . "\n");
 
     // ローカル環境なら認証スキップしてテストユーザーをセット
     if ($_ENV['ENV'] === 'test') {
@@ -39,6 +39,10 @@ class AuthMiddleware
 
     // アクセストークンの検証（セッショントークンっていう命名にしてしまってるので直す）
     try {
+      if (!$_COOKIE['session_token']) {
+        throw new CustomException(403, 'Forbidden', 'No cookie set');
+      }
+
       $sub = $authService->validAccessToken($_COOKIE['session_token'] ?? null);
 
       $me = $memService->getMe($sub);

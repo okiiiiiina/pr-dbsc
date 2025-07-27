@@ -2,6 +2,8 @@
 
 namespace App\models;
 
+use App\models\WorkspaceModel;
+
 class MeModel
 {
   private string $userID;
@@ -10,9 +12,10 @@ class MeModel
   private string $email;
   private string $role;
   private string $logoPath;
+  private ?WorkspaceModel $workspace;
 
 
-  public function __construct(array $data)
+  public function __construct(array $data, ?array $wsData = [])
   {
     $this->userID = $data['userID'] ?? '';
     $this->memberID = $data['memberID'] ?? '';
@@ -20,6 +23,7 @@ class MeModel
     $this->email = $data['email'] ?? '';
     $this->role = $data['role'] ?? '';
     $this->logoPath = $data['logoPath'] ?? '';
+    $this->workspace = $wsData ? new WorkspaceModel($wsData) : null;
   }
 
   public function toArray(): array
@@ -31,6 +35,7 @@ class MeModel
       'email' => $this->email,
       'role' => $this->role,
       'logoPath' => $this->logoPath,
+      'workspace' => $this->workspace ? $this->workspace->toArray() : null,
     ];
   }
 

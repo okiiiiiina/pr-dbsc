@@ -1,44 +1,63 @@
-## 起動
+# ローカル開発サーバーの起動方法
 
+## 1. nginx（HTTPS リバースプロキシ）
+
+- **役割**: `https://localhost:8102` を受け取り、PHP サーバー（HTTP）に転送
+- **設定場所**:  
+  `/opt/homebrew/etc/nginx/servers/`  
+  （例: `dbsc.conf`, `pr-php.conf`）
+
+### 設定ファイル
+
+```zsh
+cat /opt/homebrew/etc/nginx/servers/pr-php.conf
 ```
+
+### nginx コマンド
+
+```zsh
+# nginxが停止していたら再起動
+brew services start nginx
+
+# nginxが停止
+brew services stop nginx
+```
+
+## 2. PHP 組み込みサーバー
+
+```zsh
 cd admin-bff
 php -S 127.0.0.1:8101 src/index.php
-php -S 127.0.0.1:8101 -t src src/index.php
 ```
 
-## test
+# API テスト
 
-### Log
+## 1. GET リクエスト
 
-```
-error_log(json_encode($workspaceIDs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-```
-
-### GET
-
-```
-※  helthcheck の middlware を off にしてから確認する「'middleware' => []」
-
+```zsh
 curl http://localhost:8101/api/health
-
 curl https://localhost:8102/api/workspaces/my-list
-
 curl https://localhost:8102/api/members
+curl https://localhost:8102/api/auth/google-sso
 ```
 
-### POST
+## 2. POST リクエスト
 
-```
-※  該当API の middlware を off にしてから確認する「'middleware' => []」
-
+```zsh
 curl -X POST http://localhost:8101/api/workspaces \
   -H "Content-Type: application/json" \
   -d '{"name": "ワークスペース名", "plan": "pro"}'
 ```
 
-## 認証・認可フロー（Auth0 + 自前 JWT）
+# Log
 
-### 🔐 ログインフロー
+```
+error_log(json_encode($workspaceIDs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+```
+
+# 認証・認可フロー（Auth0 + 自前 JWT）
+
+## 🔐 ログインフロー
 
 1. ユーザーが「ログイン」ボタンをクリック
 2. バックエンドで Auth0 のドメイン・client_id を用いて SSO リンクを生成
@@ -59,7 +78,7 @@ curl -X POST http://localhost:8101/api/workspaces \
 
 ---
 
-### 🛡 API リクエスト時の認証チェック
+## 🛡 API リクエスト時の認証チェック
 
 1. クライアントが API をリクエスト
 2. バックエンドのミドルウェアで Cookie から JWT を取得し検証
@@ -72,7 +91,7 @@ curl -X POST http://localhost:8101/api/workspaces \
 
 ---
 
-### 🔧 補足ポイント
+## 🔧 補足ポイント
 
 - `JWT::decode($token, new Key($_ENV['JWT_SECRET'], 'HS256'))` のように署名アルゴリズムの明示が必要です
 - 自前 JWT の `aud` は、**受け取り対象となる API を識別する固定値**が望ましく、Auth0 の `client_id` を使う必要はありません

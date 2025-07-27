@@ -47,12 +47,10 @@ export function useCallbackAuth() {
         })
 
         if (!res.ok) {
-          const text = await res.text()
+          const text = res.text()
           console.error('🚨 API error response:', text)
           throw new Error('API returned non-OK response')
         }
-        console.log('🍇 ああああ', res)
-
         const data = await res.json()
         if (data.data.length > 0) {
           router.push('/workspace/select')

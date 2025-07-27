@@ -12,14 +12,17 @@ class MemberRepository
 {
   private string $memberStoragePath = __DIR__ . '/../storage/member.json';
   private string $userStoragePath = __DIR__ . '/../storage/user.json';
+  private string $workspaceStoragePath = __DIR__ . '/../storage/workspace.json';
 
   private JsonLoader $memberJsonLoader;
   private JsonLoader $userJsonLoader;
+  private JsonLoader $workspaceJsonLoader;
 
   public function __construct()
   {
     $this->memberJsonLoader = new JsonLoader($this->memberStoragePath);
     $this->userJsonLoader = new JsonLoader($this->userStoragePath);
+    $this->workspaceJsonLoader = new JsonLoader($this->workspaceStoragePath);
   }
 
   /**
@@ -27,29 +30,49 @@ class MemberRepository
    */
   public function findMeByUserID(string $id): array
   {
-    $users = $this->userJsonLoader->load();
-    $user = $users[$id];
 
-    $members = $this->memberJsonLoader->load();
-    $member = null;
-    foreach ($members as $m) {
-      if ($m['userID'] === $user['id']) {
-        $member = $m;
-        break;
+    try {
+      // user
+      $users = $this->userJsonLoader->load();
+      $user = $users[$id];
+
+      // member
+      $members = $this->memberJsonLoader->load();
+      $member = null;
+      foreach ($members as $m) {
+        if ($m['userID'] === $user['id']) {
+          $member = $m;
+          break;
+        }
       }
+
+      if ($member) {
+        // workspace
+        $workspaces = $this->workspaceJsonLoader->load();
+        $workspace = null;
+        foreach ($workspaces as $w) {
+          if ($member['workspaceID'] === $w['id']) {
+            $workspace = $w;
+            break;
+          }
+        }
+      }
+
+      // dbだと普通にレコード返すだけだからモデルにせずに返す。でも保存の時はモデルでもらう。もしくはモデルにしたものを、配列の状態にしてもらうか。
+      $me = [
+        'userID' => $user['id'],
+        'memberID' => $member['id'],
+        'name' => $member['name'],
+        'email' => $user['email'],
+        'role' => $member['role'],
+        'logoPath' => $user['logoPath'],
+        'workspace' =>  $workspace,
+      ];
+
+      return $me;
+    } catch (\Throwable $e) {
+      throw new CustomException(500, 'Internal Server Error', 'Failed to load user data from storage');
     }
-
-    // dbだと普通にレコード返すだけだからモデルにせずに返す。でも保存の時はモデルでもらう。もしくはモデルにしたものを、配列の状態にしてもらうか。
-    $me = [
-      'userID' => $user['id'],
-      'memberID' => $member['id'],
-      'name' => $member['name'],
-      'email' => $user['email'],
-      'role' => $member['role'],
-      'logoPath' => $user['logoPath'],
-    ];
-
-    return $me;
   }
 
   /**

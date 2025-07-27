@@ -12,10 +12,11 @@ class WorkspaceModel
 
   public function __construct(array $data)
   {
-    error_log("WorkspaceModel: " . json_encode($data));
+    error_log("🍎 WorkspaceModel: " . json_encode($data));
     $this->id = $data['id'] ?? $this->generateNewID();
     $this->name = $data['name'] ?? '';
     $this->stripeCustomerId = $data['stripeCustomerId'] ?? '';
+    error_log("================");
   }
 
   public function toArray(): array

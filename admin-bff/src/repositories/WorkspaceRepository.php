@@ -47,15 +47,12 @@ class WorkspaceRepository
       'workspaceID'
     );
 
-    error_log("workspaceIDs: " . json_encode($workspaceIDs));
-
     // ws
     $wsJsonLoader = new JsonLoader($this->storagePath);
     $workspaces = $wsJsonLoader->load();
 
     $myList = [];
     foreach ($workspaceIDs as $id) {
-      error_log($id);
       if (isset($workspaces[$id])) {
         $myList[] = $workspaces[$id];
       }

@@ -27,11 +27,9 @@ class MemberController
    */
   public function handleGetMe(): void
   {
-    error_log("🍆🍆🍆handleGetMe s🍆🍆🍆");
     $me = AuthContext::getMe();
 
     if (!$me) {
-      error_log("🍆con !me");
       Response::error('Unauthorized', 401);
       return;
     }

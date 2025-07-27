@@ -17,6 +17,7 @@ use App\repositories\WorkspaceRepository;
 
 use DateTime;
 use DateInterval;
+use Error;
 use Exception;
 
 class WorkspaceService
@@ -52,6 +53,7 @@ class WorkspaceService
     try {
       $myListRaw = $this->repo->getMyList($me->getUserID());
       $res = array_map(fn($item) => new WorkspaceModel($item), $myListRaw);
+
       return $res;
     } catch (Exception $e) {
       throw new CustomException(

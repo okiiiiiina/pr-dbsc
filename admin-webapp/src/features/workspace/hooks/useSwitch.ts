@@ -1,3 +1,4 @@
+'use client'
 import useSWRMutation from 'swr/mutation'
 import { useRouter } from 'next/navigation'
 
@@ -21,7 +22,6 @@ export function useSwitch() {
 
   const { trigger, isMutating, error } = useSWRMutation('https://localhost:8102/api/workspaces/switch', switchWorkspace, {
     onSuccess: () => {
-      alert('success')
       router.push('/')
     },
     onError: () => {
