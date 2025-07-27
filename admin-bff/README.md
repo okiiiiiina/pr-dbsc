@@ -37,16 +37,20 @@ php -S 127.0.0.1:8101 src/index.php
 ```zsh
 curl http://localhost:8101/api/health
 curl https://localhost:8102/api/workspaces/my-list
-curl https://localhost:8102/api/members
 curl https://localhost:8102/api/auth/google-sso
+
+
+curl https://localhost:8102/api/members
 ```
 
 ## 2. POST リクエスト
 
 ```zsh
-curl -X POST http://localhost:8101/api/workspaces \
+curl -k \
+  -X GET "https://localhost:8102/api/members" \
+  --cookie "Workspace_ID=ws_20250716_132532244" \
   -H "Content-Type: application/json" \
-  -d '{"name": "ワークスペース名", "plan": "pro"}'
+  -d '{"name":"test"}'
 ```
 
 # Log

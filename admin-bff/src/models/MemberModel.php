@@ -10,6 +10,7 @@ class MemberModel
   private string $name;
   private string $email;
   private string $workspaceID;
+  private string $role;
   private string $userID;
 
 
@@ -20,6 +21,7 @@ class MemberModel
     $this->name = $data['name'] ?? '';
     $this->email = $data['email'] ?? '';
     $this->workspaceID = $data['workspaceID'] ?? '';
+    $this->role = $data['role'] ?? '';
     $this->userID = $data['userID'] ?? '';
   }
 
@@ -30,6 +32,7 @@ class MemberModel
       'email' => $this->email,
       'name' => $this->name,
       'workspaceID' => $this->workspaceID,
+      'role' => $this->role,
       'userID' => $this->userID,
     ];
   }

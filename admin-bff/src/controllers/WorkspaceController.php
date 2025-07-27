@@ -45,7 +45,7 @@ class WorkspaceController
 
     $wsID = $this->service->create($data);
 
-    setcookie('Workspace_id', $wsID);
+    setcookie('Workspace_ID', $wsID);
     Response::success([], 204);
   }
 
@@ -60,7 +60,14 @@ class WorkspaceController
 
       $id = $this->service->switch($data->id);
 
-      setcookie('Workspace_id', $id);
+      // setcookie('Workspace_ID', $id);
+      setcookie('Workspace_ID', $id, [
+        'expires' => time() + 3600,
+        'path' => '/',
+        'secure' => true,        // HTTPSのみ
+        'httponly' => false,     // JSからも見えるならfalse
+        'samesite' => 'None',    // クロスサイト用
+      ]);
       Response::success([], 204);
     } catch (CustomException $e) {
       // すでに CustomException ならログ出てる想定

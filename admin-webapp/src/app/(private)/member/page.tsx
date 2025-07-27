@@ -6,6 +6,7 @@ export default function MemberPage() {
   console.log('🪏レンダリング🪏')
 
   const { members, isLoading } = useMembers()
+  console.log(members)
 
   if (isLoading) return <main className="mainContainer">loading...</main>
 
@@ -24,7 +25,6 @@ export default function MemberPage() {
                   <th>メールアドレス</th>
                   <th>名前</th>
                   <th>権限</th>
-                  <th>更新日時</th>
                 </tr>
               </thead>
               <tbody>
@@ -34,7 +34,6 @@ export default function MemberPage() {
                     <td>{member.email}</td>
                     <td>{member.name}</td>
                     <td>{member.role}</td>
-                    <td>{member.updatedAt}</td>
                   </tr>
                 ))}
               </tbody>

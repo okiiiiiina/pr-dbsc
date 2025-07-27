@@ -26,13 +26,11 @@ class Stripe
     string $email,
     string $wsID,
   ): StripeCustomerModel {
-    error_log("aaa");
-
     $res = $this->stripe->customers->create([
       'name' => $name,
       'email' => $email,
       'metadata' => [
-        'workspace_id' => $wsID, // スネークケースでいいのだろうか
+        'workspace_id' => $wsID, // stripe スネークケースでいいのだろうか
       ],
     ]);
 

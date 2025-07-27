@@ -1,10 +1,9 @@
 import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import { Member } from '@/features/member/types/member'
+import { fetcher } from '@/libs/fetcher'
 
 export function useMembers() {
-  const fetcher = (url: string) => fetch(url, { credentials: 'include' }).then((r) => r.json())
-
   const { data, error, isLoading } = useSWR(`https://localhost:8102/api/members`, fetcher)
   const [members, setMembers] = useState<Member[]>([])
 

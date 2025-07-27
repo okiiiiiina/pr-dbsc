@@ -42,10 +42,10 @@ class MemberController
    */
   public function handleGetList(): void
   {
-    $wsID = $_COOKIE['Workspace_id'] ?? null;
+    $wsID = $_COOKIE['Workspace_ID'] ?? null;
 
     if (!$wsID) {
-      Response::error('workspace_id が cookie に存在しません', 400);
+      Response::error('Workspace_ID が cookie に存在しません', 400);
       return;
     }
 
@@ -56,8 +56,6 @@ class MemberController
         fn($member) => $member->toArray(),
         $members
       );
-
-      error_log("🍎🍎🍎" . json_encode($list, true));
 
       Response::success($list);
     } catch (Exception $e) {

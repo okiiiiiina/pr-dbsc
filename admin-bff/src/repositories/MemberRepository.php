@@ -81,12 +81,22 @@ class MemberRepository
   public function getAll(string $wsID)
   {
     $members = $this->memberJsonLoader->load();
-
-    $list = array_filter($members, function ($m) use ($wsID) {
+    $filtered = array_filter($members, function ($m) use ($wsID) {
       return $m['workspaceID'] === $wsID;
     });
+    $result = array_values($filtered);
 
-    return $list;
+    $users = $this->userJsonLoader->load();
+
+    foreach ($result as $i => $m) {
+      if (isset($users[$m['userID']])) {
+        $user = $users[$m['userID']];
+        $result[$i]['email'] = $user['email'];
+        break;
+      }
+    }
+
+    return $result;
   }
 
   /**

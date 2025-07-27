@@ -26,7 +26,7 @@ class MemberService
   {
     $res = $this->repo->findMeByUserID($id);
 
-    error_log("🍎service" . json_encode($res, true));
+    error_log("🍎service|getMe" . json_encode($res, true));
 
     $me = new MeModel([
       'userID' => $res['userID'],
@@ -50,8 +50,10 @@ class MemberService
       $members = [];
 
       foreach ($list as $item) {
-        $members[] = (new MemberModel($item))->toArray();
+        $members[] = new MemberModel($item);
       }
+
+      error_log("🍎service|getAll" . json_encode($list, true));
 
       return $members;
     } catch (Exception $e) {

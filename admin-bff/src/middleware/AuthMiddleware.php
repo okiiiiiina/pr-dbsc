@@ -13,7 +13,7 @@ class AuthMiddleware
 {
   public static function handle()
   {
-    error_log("🐉middleware🐉 [ENV]" . $_ENV['ENV'] . "[cookie]" . $_COOKIE['session_token'] . "\n");
+    error_log("🐉middleware🐉 [ENV]" . $_ENV['ENV'] . "[cookie]"  . "\n");
 
     // ローカル環境なら認証スキップしてテストユーザーをセット
     if ($_ENV['ENV'] === 'test') {
